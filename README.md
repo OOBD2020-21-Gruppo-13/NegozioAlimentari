@@ -14,3 +14,10 @@ Per il gruppo da 3: il fruttivendolo ha un certo numero di dipendenti, e ad ogni
 dipendente che l’ha portata a termine. Deve pertanto essere possibile ricercare quale dipendente ha
 effettuato il maggior numero di vendite in un determinato periodo differenziandolo dal dipendente che ha
 portato al fruttivendolo il maggior introito.
+
+# Collegarsi Al DBPostgres
+
+Scaricare da qui il jar di postgres: https://jdbc.postgresql.org/download/postgresql-42.2.18.jar
+
+Per installarlo su eclpise andare sul Java Project poi TastoDestro->Properties->Java Build Patch->Libraries->ModuelPatch->Add External Jar-> Selezionare il jar scaricato in precendenza.
+
