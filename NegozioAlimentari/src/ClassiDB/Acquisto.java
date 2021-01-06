@@ -6,7 +6,7 @@ public class Acquisto {
 	private Double PrezzoTotale;
 
 	
-	public Acquisto(int idAcquisto, int idCliente, int quantitaProdotto, int iddipendente,Double prezzototale) {
+	public Acquisto(int idAcquisto, int idCliente, int iddipendente,Double prezzototale) {
 		super();
 		IdAcquisto = idAcquisto;
 		IdCliente = idCliente;
