@@ -53,6 +53,11 @@ public class Acquisto {
 	public void setPrezzoTotale(Double prezzoTotale) {
 		PrezzoTotale = prezzoTotale;
 	}
-	
-	
+
+
+	@Override
+	public String toString() {
+		return "Acquisto [IdAcquisto=" + IdAcquisto + ", IdCliente=" + IdCliente + ", IdDipendente=" + IdDipendente
+				+ ", PrezzoTotale=" + PrezzoTotale + "]";
+	}	
 }

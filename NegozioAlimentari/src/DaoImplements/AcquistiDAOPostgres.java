@@ -54,10 +54,5 @@ public void setAcquisti(ArrayList<Acquisto> acquisti) {
 
 
 
-
-
-
-
-
 }
 

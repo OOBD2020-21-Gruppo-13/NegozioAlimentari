@@ -42,10 +42,20 @@ public ClienteDAOPostgres(Connection connection) {
     {
         System.out.println("SQL Exception: \n"+e);
     }
-
-
-
+        
   }
+
+public int RicavoId() throws SQLException 
+{
+    Statement st = con.createStatement();
+    ResultSet rs = st.executeQuery("SELECT idtessera FROM cliente ORDER BY idtessera DESC LIMIT 1");
+    if(rs.next()) {
+        return (rs.getInt("idtessera")+1);
+    }else 
+    {
+        return 1;
+    }
+}
 
 public ArrayList<Cliente> getClienti() {
 	return Clienti;
@@ -54,6 +64,8 @@ public ArrayList<Cliente> getClienti() {
 public void setClienti(ArrayList<Cliente> clienti) {
 	Clienti = clienti;
 }
+
+
 	
 
 }

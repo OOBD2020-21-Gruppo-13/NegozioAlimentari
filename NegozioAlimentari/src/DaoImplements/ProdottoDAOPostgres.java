@@ -63,5 +63,8 @@ public ProdottoDAOPostgres(Connection connection) {
 public ArrayList<Prodotto> getMagazzino() {
 	return Magazzino;
 }
+
+
 	
+
 }

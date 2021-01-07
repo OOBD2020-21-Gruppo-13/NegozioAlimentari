@@ -87,5 +87,10 @@ public class Prodotto {
 		DataMungitura = dataMungitura;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Prodotto [Nome=" + Nome + ", Tipo=" + Tipo + ", Prezzo=" + Prezzo + ", Quantita=" + Quantita
+				+ ", IdProdotto=" + IdProdotto + ", DataScadenza=" + DataScadenza + ", DataRaccolta=" + DataRaccolta
+				+ ", DataProduzione=" + DataProduzione + ", DataMungitura=" + DataMungitura + "]";
+	}
 }

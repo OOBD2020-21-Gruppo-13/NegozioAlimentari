@@ -64,12 +64,10 @@ public class Cliente {
 		PuntiFedelta = puntiFedelta;
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "Cliente [Nome=" + Nome + ", Cognome=" + Cognome + ", IdTessera=" + IdTessera + ", saldo=" + saldo
+				+ ", PuntiFedelta=" + PuntiFedelta + "]";
+	}	
 }

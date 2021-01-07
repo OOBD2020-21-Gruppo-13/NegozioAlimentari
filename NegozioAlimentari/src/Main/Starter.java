@@ -27,6 +27,8 @@ public class Starter {
 		System.out.println(s.DAO1.getAcquisti());
 		System.out.println(s.DAO2.getClienti());
 		System.out.println(s.DAO3.getMagazzino());
+		System.out.println(s.DAO2.RicavoId());
 	}
+	
 	
 }
