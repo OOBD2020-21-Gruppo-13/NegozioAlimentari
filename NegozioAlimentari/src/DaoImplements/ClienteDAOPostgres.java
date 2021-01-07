@@ -57,6 +57,21 @@ public int RicavoId() throws SQLException
     }
 }
 
+public void Register(String Nome,String Cognome,String Password)
+{
+    try {
+    PreparedStatement st = con.prepareStatement("INSERT INTO cliente VALUES (?,?,?,0,?)");
+    st.setInt(1,RicavoId());
+    st.setString(2,Nome);
+    st.setString(3,Cognome);
+    st.setString(4,Password);
+    ResultSet rs = st.executeQuery();
+    }catch(SQLException e) 
+    {
+        System.out.println(e);
+    }
+}
+
 public ArrayList<Cliente> getClienti() {
 	return Clienti;
 }
