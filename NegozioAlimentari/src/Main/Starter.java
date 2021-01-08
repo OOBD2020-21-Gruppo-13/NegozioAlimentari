@@ -39,6 +39,12 @@ public class Starter {
 		System.out.println("Inserisci la password: ");
 		String password = tastiera.next();
 		s.DAO2.Register(nome, cognome, password);
+		System.out.println("Inserisci il id: ");
+		int Useraname = tastiera.nextInt();
+		System.out.println("Inserisci il password: ");
+		String Password = tastiera.next();
+		s.DAO2.Login(Useraname, Password);
+		
 	}
 	
 	

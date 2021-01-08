@@ -72,6 +72,20 @@ public void Register(String Nome,String Cognome,String Password)
     }
 }
 
+public int Login(int Username,String Password) throws SQLException 
+{
+	PreparedStatement st = con.prepareStatement("SELECT * FROM cliente WHERE idtessera = ? AND password = ? ");
+	st.setInt(1, Username);
+	st.setString(2, Password);
+	ResultSet rs = st.executeQuery();
+	
+	if(rs.next()) 
+	{
+		System.out.println("Sei loggato con successo");
+		return Username;
+	}else return 0;	
+}
+
 public ArrayList<Cliente> getClienti() {
 	return Clienti;
 }
