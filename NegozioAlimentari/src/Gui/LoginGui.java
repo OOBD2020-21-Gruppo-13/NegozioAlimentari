@@ -12,6 +12,12 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class LoginGui extends JFrame {
 
@@ -20,46 +26,52 @@ public class LoginGui extends JFrame {
 	private JTextField UsernameField;
 	private JPasswordField PasswordField;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginGui frame = new LoginGui();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public LoginGui() {
+	public LoginGui(Starter temp) {
+		Controller = temp;
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 600);
+		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		UsernameField = new JTextField();
-		UsernameField.setBounds(375, 102, 86, 20);
+		UsernameField.setBounds(179, 84, 86, 20);
 		contentPane.add(UsernameField);
 		UsernameField.setColumns(10);
 		
 		PasswordField = new JPasswordField();
-		PasswordField.setBounds(375, 155, 86, 20);
+		PasswordField.setBounds(179, 129, 86, 20);
 		contentPane.add(PasswordField);
 		
 		JButton AccediButton = new JButton("Accedi");
-		AccediButton.setBounds(372, 211, 89, 23);
+		AccediButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO aggiungerre metodo per il login 
+			}
+		});
+		AccediButton.setBounds(179, 160, 89, 23);
 		contentPane.add(AccediButton);
 		
 		JLabel UsernameLabel = new JLabel("Username");
-		UsernameLabel.setBounds(385, 76, 86, 14);
+		UsernameLabel.setBounds(201, 67, 86, 14);
 		contentPane.add(UsernameLabel);
 		
 		JLabel PasswordLabel = new JLabel("Password");
-		PasswordLabel.setBounds(385, 133, 104, 14);
+		PasswordLabel.setBounds(201, 115, 104, 14);
 		contentPane.add(PasswordLabel);
+		
+		JLabel CreaAccountButton = new JLabel("Crea Account");
+		CreaAccountButton.setForeground(Color.BLUE);
+		CreaAccountButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//TODO aggiungere richiamo alla futura gui per il register
+			}
+		});
+		CreaAccountButton.setFont(new Font("Arial", Font.PLAIN, 15));
+		CreaAccountButton.setBounds(179, 201, 111, 20);
+		contentPane.add(CreaAccountButton);
 	}
 }

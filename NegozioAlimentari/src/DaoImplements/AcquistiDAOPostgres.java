@@ -20,7 +20,7 @@ public  AcquistiDAOPostgres(Connection connection) {
 
     while(rs.next())
     {
-     	int IdA = rs.getInt("id");
+     	int IdA = rs.getInt("idacquisto");
      	int IdC = rs.getInt("idcliente");
      	int DP = rs.getInt("iddipendente");
      	Double IdP = rs.getDouble("prezzototale");

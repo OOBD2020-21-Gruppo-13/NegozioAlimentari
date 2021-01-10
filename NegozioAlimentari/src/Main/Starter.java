@@ -51,7 +51,7 @@ public class Starter {
 	}
 	
 	public void AccendiGui(){
-		Login= new LoginGui();
+		Login= new LoginGui(this);
 		Login.setVisible(true);
 	}
 	
