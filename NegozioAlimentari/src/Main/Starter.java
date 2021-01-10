@@ -4,11 +4,13 @@ import java.util.Scanner;
 
 import DaoImplements.*;
 import Database.DBConnection;
+import Gui.LoginGui;
 
 public class Starter {
 
 	DBConnection dbconn = null;
     Connection connection = null;
+    LoginGui Login;
     AcquistiDAOPostgres DAO1 = null;
     ClienteDAOPostgres DAO2 = null;
     ProdottoDAOPostgres DAO3 = null;
@@ -21,6 +23,7 @@ public class Starter {
         DAO1 = new AcquistiDAOPostgres(connection);
         DAO2 = new ClienteDAOPostgres(connection);
         DAO3 = new ProdottoDAOPostgres(connection);
+        AccendiGui();
 	}
 	
 	public static void main(String[] args) throws SQLException 
@@ -45,6 +48,11 @@ public class Starter {
 		String Password = tastiera.next();
 		s.DAO2.Login(Useraname, Password);
 		
+	}
+	
+	public void AccendiGui(){
+		Login= new LoginGui();
+		Login.setVisible(true);
 	}
 	
 	
