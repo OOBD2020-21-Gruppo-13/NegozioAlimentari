@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -48,7 +49,11 @@ public class LoginGui extends JFrame {
 		JButton AccediButton = new JButton("Accedi");
 		AccediButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO aggiungerre metodo per il login 
+				try {
+					Controller.getDAO2().Login(Integer.parseInt(UsernameField.getText()), PasswordField.getText());
+				} catch (SQLException e1) {
+					System.out.println(e1);
+				}
 			}
 		});
 		AccediButton.setBounds(179, 160, 89, 23);

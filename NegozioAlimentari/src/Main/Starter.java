@@ -55,5 +55,16 @@ public class Starter {
 		Login.setVisible(true);
 	}
 	
+	public AcquistiDAOPostgres getDAO1() {
+		return DAO1;
+	}
+	public ClienteDAOPostgres getDAO2() {
+		return DAO2;
+	}
+	public ProdottoDAOPostgres getDAO3() {
+		return DAO3;
+	}
+	
+	
 	
 }
