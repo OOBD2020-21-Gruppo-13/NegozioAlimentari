@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class RegisterGui extends JFrame {
 
@@ -42,6 +44,14 @@ public class RegisterGui extends JFrame {
 		NomeField.setColumns(10);
 		
 		JButton RegisterButton = new JButton("Registrati");
+		RegisterButton.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent e) {
+				Controller.getDAO2().Register(NomeField.getText(), CognomeField.getText(), PasswordField.getText());
+				RegisterGui.this.setVisible(false);
+				Controller.AccendiGui();
+			}
+		});
 		RegisterButton.setBounds(174, 196, 89, 23);
 		contentPane.add(RegisterButton);
 		
