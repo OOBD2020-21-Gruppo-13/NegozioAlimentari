@@ -5,12 +5,14 @@ import java.util.Scanner;
 import DaoImplements.*;
 import Database.DBConnection;
 import Gui.LoginGui;
+import Gui.RegisterGui;
 
 public class Starter {
 
 	DBConnection dbconn = null;
     Connection connection = null;
     LoginGui Login;
+    RegisterGui Register;
     AcquistiDAOPostgres DAO1 = null;
     ClienteDAOPostgres DAO2 = null;
     ProdottoDAOPostgres DAO3 = null;
@@ -53,6 +55,11 @@ public class Starter {
 	public void AccendiGui(){
 		Login= new LoginGui(this);
 		Login.setVisible(true);
+	}
+	public void AccediRegister() {
+		Login.setVisible(false);
+		Register = new RegisterGui(this);
+		Register.setVisible(true);
 	}
 	
 	public AcquistiDAOPostgres getDAO1() {

@@ -48,7 +48,7 @@ public class LoginGui extends JFrame {
 		
 		JButton AccediButton = new JButton("Accedi");
 		AccediButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e){
 				try {
 					Controller.getDAO2().Login(Integer.parseInt(UsernameField.getText()), PasswordField.getText());
 				} catch (SQLException e1) {
@@ -70,9 +70,8 @@ public class LoginGui extends JFrame {
 		JLabel CreaAccountButton = new JLabel("Crea Account");
 		CreaAccountButton.setForeground(Color.BLUE);
 		CreaAccountButton.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
-				//TODO aggiungere richiamo alla futura gui per il register
+				Controller.AccediRegister();
 			}
 		});
 		CreaAccountButton.setFont(new Font("Arial", Font.PLAIN, 15));
