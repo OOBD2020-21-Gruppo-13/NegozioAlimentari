@@ -5,15 +5,18 @@ import java.util.*;
 
 import ClassiDB.Cliente;
 import Dao.ClienteDAO;
+import Main.Starter;
 
 
 public class ClienteDAOPostgres implements ClienteDAO {
 
 	Connection con = null;
     ArrayList<Cliente> Clienti = new ArrayList<Cliente>();
+    Starter Controller = null;
 
-public ClienteDAOPostgres(Connection connection) { 
+public ClienteDAOPostgres(Connection connection, Starter temp) { 
     this.con=connection;
+    this.Controller= temp;
 
     try 
     {

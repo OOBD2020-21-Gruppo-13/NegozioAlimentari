@@ -5,14 +5,18 @@ import java.util.ArrayList;
 
 import ClassiDB.Acquisto;
 import Dao.AcquistiDAO;
+import Main.Starter;
 
 public class AcquistiDAOPostgres implements AcquistiDAO {
 
 	Connection con = null;
 	ArrayList<Acquisto> Acquisti = new ArrayList<Acquisto>();
+	Starter Controller = null;
 	
-public  AcquistiDAOPostgres(Connection connection) { 
+public  AcquistiDAOPostgres(Connection connection, Starter temp) { 
 	this.con=connection;
+	this.Controller=temp;
+	
     try 
     {										
     PreparedStatement st = con.prepareStatement("SELECT * FROM acquisto");

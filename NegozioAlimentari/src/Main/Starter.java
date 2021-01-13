@@ -22,9 +22,9 @@ public class Starter {
 	{
 		dbconn = DBConnection.getInstance();
         connection = dbconn.getConnection();
-        DAO1 = new AcquistiDAOPostgres(connection);
-        DAO2 = new ClienteDAOPostgres(connection);
-        DAO3 = new ProdottoDAOPostgres(connection);
+        DAO1 = new AcquistiDAOPostgres(connection, this);
+        DAO2 = new ClienteDAOPostgres(connection, this);
+        DAO3 = new ProdottoDAOPostgres(connection, this);
         AccendiGui();
 	}
 	
@@ -70,6 +70,22 @@ public class Starter {
 	}
 	public ProdottoDAOPostgres getDAO3() {
 		return DAO3;
+	}
+
+	public LoginGui getLogin() {
+		return Login;
+	}
+
+	public void setLogin(LoginGui login) {
+		Login = login;
+	}
+
+	public RegisterGui getRegister() {
+		return Register;
+	}
+
+	public void setRegister(RegisterGui register) {
+		Register = register;
 	}
 	
 	

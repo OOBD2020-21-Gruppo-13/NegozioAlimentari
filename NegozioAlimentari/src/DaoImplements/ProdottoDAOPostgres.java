@@ -3,14 +3,17 @@ import java.sql.*;
 import java.util.ArrayList;
 import ClassiDB.Prodotto;
 import Dao.ProdottoDAO;
+import Main.Starter;
 
 public class ProdottoDAOPostgres implements ProdottoDAO{
 
 	Connection con=null;
 	ArrayList<Prodotto> Magazzino = new ArrayList<>();
+	Starter Controller= null;
 	
-public ProdottoDAOPostgres(Connection connection) { 
+public ProdottoDAOPostgres(Connection connection, Starter temp) { 
 	this.con=connection;
+	this.Controller=temp;
    
     try 
     {										

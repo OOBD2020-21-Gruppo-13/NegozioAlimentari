@@ -59,7 +59,7 @@ public class LoginGui extends JFrame {
 		AccediButton.setBounds(179, 160, 89, 23);
 		contentPane.add(AccediButton);
 		
-		JLabel UsernameLabel = new JLabel("Username");
+		JLabel UsernameLabel = new JLabel("IdTessera");
 		UsernameLabel.setBounds(201, 67, 86, 14);
 		contentPane.add(UsernameLabel);
 		

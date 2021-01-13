@@ -2,6 +2,7 @@ package Gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.HeadlessException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,9 +14,12 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -47,9 +51,14 @@ public class RegisterGui extends JFrame {
 		RegisterButton.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
-				Controller.getDAO2().Register(NomeField.getText(), CognomeField.getText(), PasswordField.getText());
-				RegisterGui.this.setVisible(false);
-				Controller.AccendiGui();
+				try {
+					Controller.getDAO2().Register(NomeField.getText(), CognomeField.getText(), PasswordField.getText());
+					JOptionPane.showMessageDialog(null, "Ti è stata assegnata la tessera numero: "+ String.valueOf(Controller.getDAO2().RicavoId()-1) +" per accedere usa questo numero","Registrazione effettuata",JOptionPane.PLAIN_MESSAGE);				
+					RegisterGui.this.setVisible(false);
+					Controller.AccendiGui();
+				} catch (SQLException e1) {
+					System.out.print(e1);
+				}
 			}
 		});
 		RegisterButton.setBounds(174, 196, 89, 23);
