@@ -8,8 +8,7 @@ public class Prodotto {
 	 private Double Prezzo;
 	 private Integer Quantita,IdProdotto;
 	 private Date DataScadenza;
-	 private Date DataRaccolta;
-	 private Date DataProduzione;
+	 private Date DataProdRacc;
 	 private Date DataMungitura;
 
 	
@@ -22,16 +21,21 @@ public class Prodotto {
 		this.Prezzo= prezzo;
 	}
 
-	public Prodotto(String nome, String tipo, Double prezzo, int quantita, int idProdotto, Date dataScadenza) {
+	
+	
+	public Prodotto(String nome, String tipo, Double prezzo, int quantita, int idProdotto, Date dataScadenza,Date DataProdracc) {
 		super();
 		Nome = nome;
 		Tipo = tipo;
 		Prezzo = prezzo;
 		Quantita = quantita;
 		IdProdotto = idProdotto;
+		this.DataProdRacc = DataProdracc;
 		DataScadenza = dataScadenza;
 	}
-	
+
+
+
 	public String getNome() {
 		return Nome;
 	}
@@ -68,18 +72,27 @@ public class Prodotto {
 	public void setDataScadenza(Date dataScadenza) {
 		DataScadenza = dataScadenza;
 	}
-	public Date getDataRaccolta() {
-		return DataRaccolta;
+	
+	public Date getDataProdRacc() {
+		return DataProdRacc;
 	}
-	public void setDataRaccolta(Date dataRaccolta) {
-		DataRaccolta = dataRaccolta;
+
+	public void setDataProdRacc(Date dataProdRacc) {
+		DataProdRacc = dataProdRacc;
 	}
-	public Date getDataProduzione() {
-		return DataProduzione;
+
+	public void setQuantita(Integer quantita) {
+		Quantita = quantita;
 	}
-	public void setDataProduzione(Date dataProduzione) {
-		DataProduzione = dataProduzione;
+
+
+
+	public void setIdProdotto(Integer idProdotto) {
+		IdProdotto = idProdotto;
 	}
+
+
+
 	public Date getDataMungitura() {
 		return DataMungitura;
 	}
@@ -87,10 +100,16 @@ public class Prodotto {
 		DataMungitura = dataMungitura;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Prodotto [Nome=" + Nome + ", Tipo=" + Tipo + ", Prezzo=" + Prezzo + ", Quantita=" + Quantita
-				+ ", IdProdotto=" + IdProdotto + ", DataScadenza=" + DataScadenza + ", DataRaccolta=" + DataRaccolta
-				+ ", DataProduzione=" + DataProduzione + ", DataMungitura=" + DataMungitura + "]";
+				+ ", IdProdotto=" + IdProdotto + ", DataScadenza=" + DataScadenza + ", DataProdRacc=" + DataProdRacc
+				+ ", DataMungitura=" + DataMungitura + "]";
 	}
+
+	
+	
+	
 }

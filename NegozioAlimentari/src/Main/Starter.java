@@ -15,7 +15,7 @@ public class Starter {
     LoginGui Login;
     RegisterGui Register;
     NegozioGui Negozio;
-    AcquistiDAOPostgres DAO1 = null;
+    DipendenteDAOPostgres DAO1 = null;
     ClienteDAOPostgres DAO2 = null;
     ProdottoDAOPostgres DAO3 = null;
     int IdLogin;
@@ -25,7 +25,7 @@ public class Starter {
 	{
 		dbconn = DBConnection.getInstance();
         connection = dbconn.getConnection();
-        DAO1 = new AcquistiDAOPostgres(connection, this);
+        DAO1 = new DipendenteDAOPostgres(connection, this);
         DAO2 = new ClienteDAOPostgres(connection, this);
         DAO3 = new ProdottoDAOPostgres(connection, this);
         AccendiGui();
@@ -35,7 +35,7 @@ public class Starter {
 	{
 		Starter s = new Starter();
 		System.out.println("Hello Database");
-		System.out.println(s.DAO1.getAcquisti());
+		System.out.println(s.DAO1.getDipendenti());
 		System.out.println(s.DAO2.getClienti());
 		System.out.println(s.DAO3.getMagazzino());
 	}
@@ -50,9 +50,11 @@ public class Starter {
 		Register.setVisible(true);
 	}
 	
-	public AcquistiDAOPostgres getDAO1() {
+	
+	public DipendenteDAOPostgres getDAO1() {
 		return DAO1;
 	}
+
 	public ClienteDAOPostgres getDAO2() {
 		return DAO2;
 	}

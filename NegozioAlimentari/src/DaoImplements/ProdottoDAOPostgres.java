@@ -28,25 +28,16 @@ public ProdottoDAOPostgres(Connection connection, Starter temp) {
     	int quantita=rs.getInt("quantitamag");
     	int idProdotto=rs.getInt("idprodotto");
     	Date dataScadenza=rs.getDate("datascadenza");
-    	Prodotto p = new Prodotto(nome,tipo,prezzo,quantita,idProdotto,dataScadenza);
-
+    	Date dataProdRacc=rs.getDate("dataprodracc");
+    	Prodotto p = new Prodotto(nome,tipo,prezzo,quantita,idProdotto,dataScadenza,dataProdRacc);
     	switch(tipo) 
     	{
-			case "farinaceo","confezionato","uova":
-				Date DataProduzione = rs.getDate("dataproduzione");
-				p.setDataProduzione(DataProduzione);
+			case "Farinaceo","Confezionato","Uova","Frutta","Verdura":
 				Magazzino.add(p);
 				break;
-			case "frutta","verdura":
-				Date DataRaccolta = rs.getDate("dataraccolta");
-				p.setDataRaccolta(DataRaccolta);
-				Magazzino.add(p);
-				break;
-			case "latticino":
-				Date DataProduzione1 = rs.getDate("dataproduzione");
+			case "Latticino":
 				Date DataMungitura = rs.getDate("datamungitura");
 				p.setDataMungitura(DataMungitura);
-				p.setDataProduzione(DataProduzione1);
 				Magazzino.add(p);
 				break;
     	}	
