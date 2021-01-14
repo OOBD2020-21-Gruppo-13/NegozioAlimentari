@@ -19,7 +19,7 @@ public  AcquistiDAOPostgres(Connection connection, Starter temp) {
 	
     try 
     {										
-    PreparedStatement st = con.prepareStatement("SELECT * FROM acquisto");
+    PreparedStatement st = con.prepareStatement("SELECT * FROM acquisto ORDER BY idacquisto");
     ResultSet rs = st.executeQuery();
 
     while(rs.next())

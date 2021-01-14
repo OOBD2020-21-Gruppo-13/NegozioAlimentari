@@ -17,7 +17,7 @@ public ProdottoDAOPostgres(Connection connection, Starter temp) {
    
     try 
     {										
-    PreparedStatement st = con.prepareStatement("SELECT * FROM prodotto");
+    PreparedStatement st = con.prepareStatement("SELECT * FROM prodotto ORDER BY idprodotto");
     ResultSet rs = st.executeQuery();
 
     while(rs.next())

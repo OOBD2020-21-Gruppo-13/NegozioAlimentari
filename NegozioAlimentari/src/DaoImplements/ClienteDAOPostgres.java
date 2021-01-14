@@ -20,7 +20,7 @@ public ClienteDAOPostgres(Connection connection, Starter temp) {
 
     try 
     {
-    PreparedStatement st = con.prepareStatement("SELECT * FROM cliente");
+    PreparedStatement st = con.prepareStatement("SELECT * FROM cliente ORDER BY idtessera");
     ResultSet rs = st.executeQuery();
 
 
@@ -29,8 +29,8 @@ public ClienteDAOPostgres(Connection connection, Starter temp) {
          String Nome = rs.getString("nome");
          String Cognome = rs.getString("cognome");
          int id = rs.getInt("idtessera");
-         Double Punti = 10.7;
-         Double Saldo = 500.25;
+         Double Punti = rs.getDouble("puntifedelta");
+         Double Saldo = rs.getDouble("saldo");
 
          Cliente c = new Cliente(Nome, Cognome, id,Saldo, Punti);
         this.Clienti.add(c);
@@ -86,7 +86,7 @@ public int Login(int Username,String Password) throws SQLException
 	{
 		System.out.println("Sei loggato con successo");
 		return Username;
-	}else return 0;	
+	}else return 0;
 }
 
 public ArrayList<Cliente> getClienti() {

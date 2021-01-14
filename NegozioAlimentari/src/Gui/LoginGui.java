@@ -50,7 +50,10 @@ public class LoginGui extends JFrame {
 		AccediButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				try {
-					Controller.getDAO2().Login(Integer.parseInt(UsernameField.getText()), PasswordField.getText());
+					if(Controller.getDAO2().Login(Integer.parseInt(UsernameField.getText()), PasswordField.getText()) > 0) {
+						Controller.setIdLogin(Controller.getDAO2().Login(Integer.parseInt(UsernameField.getText()), PasswordField.getText()));
+						Controller.AccendiNegozioInfoCliente();	
+					}
 				} catch (SQLException e1) {
 					System.out.println(e1);
 				}

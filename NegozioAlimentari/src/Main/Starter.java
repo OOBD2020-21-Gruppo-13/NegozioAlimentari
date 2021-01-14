@@ -1,10 +1,11 @@
 package Main;
 import java.sql.*;
-import java.util.Scanner;
+
 
 import DaoImplements.*;
 import Database.DBConnection;
 import Gui.LoginGui;
+import Gui.NegozioGui;
 import Gui.RegisterGui;
 
 public class Starter {
@@ -13,9 +14,11 @@ public class Starter {
     Connection connection = null;
     LoginGui Login;
     RegisterGui Register;
+    NegozioGui Negozio;
     AcquistiDAOPostgres DAO1 = null;
     ClienteDAOPostgres DAO2 = null;
     ProdottoDAOPostgres DAO3 = null;
+    int IdLogin;
    
 	
 	public Starter() throws SQLException 
@@ -31,25 +34,10 @@ public class Starter {
 	public static void main(String[] args) throws SQLException 
 	{
 		Starter s = new Starter();
-		Scanner tastiera = new Scanner(System.in);
 		System.out.println("Hello Database");
 		System.out.println(s.DAO1.getAcquisti());
 		System.out.println(s.DAO2.getClienti());
 		System.out.println(s.DAO3.getMagazzino());
-		System.out.println(s.DAO2.RicavoId());
-		System.out.println("Inserisci il nome: ");
-		String nome = tastiera.next();
-		System.out.println("Inserisci il cognome: ");
-		String cognome = tastiera.next();
-		System.out.println("Inserisci la password: ");
-		String password = tastiera.next();
-		s.DAO2.Register(nome, cognome, password);
-		System.out.println("Inserisci il id: ");
-		int Useraname = tastiera.nextInt();
-		System.out.println("Inserisci il password: ");
-		String Password = tastiera.next();
-		s.DAO2.Login(Useraname, Password);
-		
 	}
 	
 	public void AccendiGui(){
@@ -84,10 +72,24 @@ public class Starter {
 		return Register;
 	}
 
-	public void setRegister(RegisterGui register) {
+	public void setRegister(RegisterGui register) 
+	{
 		Register = register;
 	}
-	
-	
-	
+	public void AccendiNegozioInfoCliente() 
+	{
+		Login.setVisible(false);
+		Negozio = new NegozioGui(this);
+		Negozio.setVisible(true);
+		Negozio.getProfiloLabel().setText("Ciao "+DAO2.getClienti().get(IdLogin-1).getNome()+" il tuo Saldo è di "+ DAO2.getClienti().get(IdLogin-1).getSaldo()+"€");
+	}
+
+	public int getIdLogin() {
+		return IdLogin;
+	}
+
+	public void setIdLogin(int idLogin) {
+		IdLogin = idLogin;
+	}
+
 }

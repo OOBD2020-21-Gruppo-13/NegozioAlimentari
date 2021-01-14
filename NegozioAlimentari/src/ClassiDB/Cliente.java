@@ -63,6 +63,14 @@ public class Cliente {
 	public void setPuntiFedelta(double puntiFedelta) {
 		PuntiFedelta = puntiFedelta;
 	}
+	
+	public double getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(double saldo) {
+		this.saldo = saldo;
+	}
 
 
 	@Override
