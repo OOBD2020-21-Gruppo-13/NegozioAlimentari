@@ -15,8 +15,13 @@ public class DipendenteDAOPostgres implements DipendenteDAO {
 	
 public  DipendenteDAOPostgres(Connection connection,Starter temp) { 
 	this.con=connection;
-	this.Controller= temp;
-    try 
+	this.Controller= temp;   
+  }
+
+@Override
+public void CopiaDB() 
+{
+	try 
     {										
     PreparedStatement st = con.prepareStatement("select * from dipendente order by iddipendente");
     ResultSet rs = st.executeQuery();
@@ -39,10 +44,7 @@ public  DipendenteDAOPostgres(Connection connection,Starter temp) {
     {
         System.out.println("SQL Exception: \n"+e);
     }
-	
-    
-    
-  }
+}
 
 public ArrayList<Dipendente> getDipendenti() {
 	return Dipendenti;

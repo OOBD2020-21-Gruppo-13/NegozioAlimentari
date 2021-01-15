@@ -17,8 +17,13 @@ public class ClienteDAOPostgres implements ClienteDAO {
 public ClienteDAOPostgres(Connection connection, Starter temp) { 
     this.con=connection;
     this.Controller= temp;
+        
+  }
 
-    try 
+@Override
+public void CopiaDB() 
+{
+	try 
     {
     PreparedStatement st = con.prepareStatement("SELECT * FROM cliente ORDER BY idtessera");
     ResultSet rs = st.executeQuery();
@@ -45,8 +50,7 @@ public ClienteDAOPostgres(Connection connection, Starter temp) {
     {
         System.out.println("SQL Exception: \n"+e);
     }
-        
-  }
+}
 
 public int RicavoId() throws SQLException 
 {
@@ -63,11 +67,12 @@ public int RicavoId() throws SQLException
 public void Register(String Nome,String Cognome,String Password)
 {
     try {
-    PreparedStatement st = con.prepareStatement("INSERT INTO cliente VALUES (?,?,?,0,?)");
+    PreparedStatement st = con.prepareStatement("INSERT INTO cliente VALUES (?,?,?,0,?,?)");
     st.setInt(1,RicavoId());
     st.setString(2,Nome);
     st.setString(3,Cognome);
     st.setString(4,Password);
+    st.setDouble(5,Controller.Random(1000));
     ResultSet rs = st.executeQuery();
     }catch(SQLException e) 
     {
@@ -96,6 +101,8 @@ public ArrayList<Cliente> getClienti() {
 public void setClienti(ArrayList<Cliente> clienti) {
 	Clienti = clienti;
 }
+
+
 
 
 	

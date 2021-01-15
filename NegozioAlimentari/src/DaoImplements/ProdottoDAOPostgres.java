@@ -14,8 +14,14 @@ public class ProdottoDAOPostgres implements ProdottoDAO{
 public ProdottoDAOPostgres(Connection connection, Starter temp) { 
 	this.con=connection;
 	this.Controller=temp;
-   
-    try 
+   	
+  }
+
+
+@Override
+public void CopiaDB()
+{
+	try 
     {										
     PreparedStatement st = con.prepareStatement("SELECT * FROM prodotto ORDER BY idprodotto");
     ResultSet rs = st.executeQuery();
@@ -51,8 +57,7 @@ public ProdottoDAOPostgres(Connection connection, Starter temp) {
     {
         System.out.println("SQL Exception: \n"+e);
     }
-	
-  }
+}
 
 public ArrayList<Prodotto> getMagazzino() {
 	return Magazzino;
