@@ -64,19 +64,21 @@ public int RicavoId() throws SQLException
     }
 }
 
-public void Register(String Nome,String Cognome,String Password)
+public boolean Register(String Nome,String Cognome,String Password)
 {
     try {
-    PreparedStatement st = con.prepareStatement("INSERT INTO cliente VALUES (?,?,?,0,?,?)");
-    st.setInt(1,RicavoId());
-    st.setString(2,Nome);
-    st.setString(3,Cognome);
-    st.setString(4,Password);
-    st.setDouble(5,Controller.Random(1000));
-    ResultSet rs = st.executeQuery();
+	    PreparedStatement st = con.prepareStatement("INSERT INTO cliente VALUES (?,?,?,0,?,?)");
+	    st.setInt(1,RicavoId());
+	    st.setString(2,Nome);
+	    st.setString(3,Cognome);
+	    st.setString(4,Password);
+	    st.setDouble(5,Controller.Random(1000));
+	    st.executeUpdate();
+	    return true;
     }catch(SQLException e) 
     {
         System.out.println(e);
+        return false;
     }
 }
 
@@ -86,7 +88,6 @@ public int Login(int Username,String Password) throws SQLException
 	st.setInt(1, Username);
 	st.setString(2, Password);
 	ResultSet rs = st.executeQuery();
-	
 	if(rs.next()) 
 	{
 		System.out.println("Sei loggato con successo");

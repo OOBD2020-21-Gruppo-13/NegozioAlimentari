@@ -12,6 +12,8 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -49,15 +51,10 @@ public class LoginGui extends JFrame {
 		JButton AccediButton = new JButton("Accedi");
 		AccediButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				try {
-					if(Controller.getDAO2().Login(Integer.parseInt(UsernameField.getText()), PasswordField.getText()) > 0) {
-						Controller.RiempiDAO();
-						Controller.setIdLogin(Controller.getDAO2().Login(Integer.parseInt(UsernameField.getText()), PasswordField.getText()));
-						Controller.AccendiNegozioInfoCliente();							
-					}
-				} catch (SQLException e1) {
-					System.out.println(e1);
-				}
+				if(Controller.LoginButtonGui(UsernameField.getText(),PasswordField.getText())) {
+					UsernameField.setText(null);
+					PasswordField.setText(null);
+				}else JOptionPane.showMessageDialog(null, "Credenziali Non Valide");
 			}
 		});
 		AccediButton.setBounds(179, 160, 89, 23);

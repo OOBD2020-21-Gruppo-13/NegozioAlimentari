@@ -52,13 +52,12 @@ public class RegisterGui extends JFrame {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Controller.getDAO2().Register(NomeField.getText(), CognomeField.getText(), PasswordField.getText());
-					JOptionPane.showMessageDialog(null, "Ti è stata assegnata la tessera numero: "+ String.valueOf(Controller.getDAO2().RicavoId()-1) +" per accedere usa questo numero","Registrazione effettuata",JOptionPane.PLAIN_MESSAGE);				
-					RegisterGui.this.setVisible(false);
-					Controller.AccendiGui();
-				} catch (SQLException e1) {
-					System.out.print(e1);
-				}
+					if(Controller.RegisterButtonGui(NomeField.getText(), CognomeField.getText(), PasswordField.getText())) {
+						JOptionPane.showMessageDialog(null, "Ti è stata assegnata la tessera numero: "+ String.valueOf(Controller.getDAO2().RicavoId()-1) +" per accedere usa questo numero","Registrazione effettuata",JOptionPane.PLAIN_MESSAGE);
+					}else JOptionPane.showMessageDialog(null, "Dati Non Validi");
+				} catch (SQLException e1) {	
+					e1.printStackTrace();
+				}		
 			}
 		});
 		RegisterButton.setBounds(174, 196, 89, 23);

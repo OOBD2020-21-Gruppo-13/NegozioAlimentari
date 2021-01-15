@@ -7,7 +7,7 @@ public class Cliente {
 	private int IdTessera;
 	private double saldo;
 	private double PuntiFedelta;
-
+	private ArrayList<Prodotto> Carrello = new ArrayList<Prodotto>();
 	public Cliente(String nome, String cognome, int idTessera, double saldo, double puntiFedelta) {
 		super();
 		Nome = nome;
@@ -77,5 +77,16 @@ public class Cliente {
 	public String toString() {
 		return "Cliente [Nome=" + Nome + ", Cognome=" + Cognome + ", IdTessera=" + IdTessera + ", saldo=" + saldo
 				+ ", PuntiFedelta=" + PuntiFedelta + "]";
-	}	
+	}
+
+
+	public ArrayList<Prodotto> getCarrello() {
+		return Carrello;
+	}
+
+
+	public void setCarrello(ArrayList<Prodotto> carrello) {
+		Carrello = carrello;
+	}
+	
 }

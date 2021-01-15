@@ -15,6 +15,9 @@ import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class NegozioGui extends JFrame {
 
@@ -76,6 +79,17 @@ public class NegozioGui extends JFrame {
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
+		
+		JLabel LogOutLabel = new JLabel("Esci dal Negozio");
+		LogOutLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Controller.LogOutNegozio();
+			}
+		});
+		LogOutLabel.setForeground(Color.BLUE);
+		LogOutLabel.setBounds(983, 11, 101, 23);
+		contentPane.add(LogOutLabel);
 	}
 	
 	public JLabel getProfiloLabel() 

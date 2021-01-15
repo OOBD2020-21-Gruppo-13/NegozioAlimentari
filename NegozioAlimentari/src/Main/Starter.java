@@ -1,6 +1,9 @@
 package Main;
 import java.sql.*;
 import java.util.*;
+
+import javax.swing.JOptionPane;
+
 import DaoImplements.*;
 import Database.DBConnection;
 import Gui.LoginGui;
@@ -109,4 +112,45 @@ public class Starter {
 		IdLogin = idLogin;
 	}
 
+	public void LogOutNegozio() {
+		this.DAO2.getClienti().get(IdLogin-1).getCarrello().removeAll(this.DAO2.getClienti().get(IdLogin-1).getCarrello());
+		this.RemoveDAO();
+		Negozio.setVisible(false);
+		Login.setVisible(true);
+	}
+	public void RemoveDAO() {
+		DAO1.getDipendenti().removeAll(DAO1.getDipendenti());
+		DAO2.getClienti().removeAll(DAO2.getClienti());
+		DAO3.getMagazzino().removeAll(DAO3.getMagazzino());
+	}
+	public boolean LoginButtonGui(String Username, String Password) {
+		if(Username!= null && Username.isEmpty()!=true && Password!= null && Password.isEmpty()!=true) {
+			try {
+				if(this.getDAO2().Login(Integer.parseInt(Username), Password) > 0) {
+					this.RiempiDAO();
+					this.IdLogin = this.getDAO2().Login(Integer.parseInt(Username), Password);
+					this.AccendiNegozioInfoCliente();
+					return true;
+				}
+			} catch (NumberFormatException nfe) {
+				return false;
+				
+			}catch (SQLException e1) {
+				System.out.println(e1);
+				return false;
+			}
+			
+		}
+		return false;
+	}
+	public boolean RegisterButtonGui(String Nome, String Cognome, String Password) throws SQLException {
+		if(Nome!= null && Nome.isEmpty()!=true && Cognome!= null && Cognome.isEmpty()!=true && Password!= null && Password.isEmpty()!=true) {
+			if(this.getDAO2().Register(Nome, Cognome, Password)) {
+				Register.setVisible(false);
+				this.AccendiGui();
+				return true;
+			}else return false;		
+		}
+	return false;
+	}
 }
