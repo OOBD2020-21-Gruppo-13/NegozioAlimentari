@@ -34,7 +34,14 @@ public class Starter {
 	public static void main(String[] args) throws SQLException 
 	{
 		Starter s = new Starter();
+		Scanner Tastiera = new Scanner(System.in);
 		System.out.println("Hello Database");
+		System.out.println("Inserisci id da comprare:");
+		int id = Tastiera.nextInt();
+		System.out.println("Inserisci quantita da comprare:");
+		int quantita = Tastiera.nextInt();
+		s.InserisciProdottoCarrello(id,quantita);
+		System.out.println(s.DAO2.getClienti().get(s.IdLogin-1).getCarrello());
 	}
 	public void AccendiGui(){
 		Login= new LoginGui(this);
@@ -131,6 +138,18 @@ public class Starter {
 		t.getTableHeader().getColumnModel().getColumn(index).setHeaderValue(Nome);
 		t.getTableHeader().repaint();
 	}
+	
+
+	public void InserisciProdottoCarrello(int id,int quantita) 
+	{
+		ClassiDB.Prodotto p = new ClassiDB.Prodotto (quantita,id,this.DAO3.getMagazzino().get(id-1).getPrezzo(),this.DAO3.getMagazzino().get(id-1).getNome());
+		this.DAO2.getClienti().get(this.IdLogin-1).getCarrello().add(p);
+		this.DAO3.getMagazzino().get(id-1).setQuantita(this.DAO3.getMagazzino().get(id-1).getQuantita()-quantita);
+	}
+	
+	
+	
+	
 	public int getIdLogin() {
 		return IdLogin;
 	}

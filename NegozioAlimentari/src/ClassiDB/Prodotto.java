@@ -33,6 +33,15 @@ public class Prodotto {
 		this.DataProdRacc = DataProdracc;
 		DataScadenza = dataScadenza;
 	}
+	
+	public Prodotto(int quantita, int idProdotto, double prezzo,String Nome) 
+	 {
+		super();
+		Quantita = quantita;
+		IdProdotto = idProdotto;
+		this.Prezzo= prezzo;
+		this.Nome=Nome;
+	 }
 
 
 
