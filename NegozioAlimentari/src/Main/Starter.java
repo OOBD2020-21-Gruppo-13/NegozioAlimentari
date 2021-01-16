@@ -1,9 +1,9 @@
 package Main;
 import java.sql.*;
 import java.util.*;
-
 import javax.swing.JOptionPane;
-
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import DaoImplements.*;
 import Database.DBConnection;
 import Gui.LoginGui;
@@ -22,7 +22,6 @@ public class Starter {
     ProdottoDAOPostgres DAO3;
     int IdLogin;
    
-	
 	public Starter() throws SQLException 
 	{
 		dbconn = DBConnection.getInstance();
@@ -32,54 +31,20 @@ public class Starter {
 	    DAO3 = new ProdottoDAOPostgres(connection, this);
         AccendiGui();
 	}
-	
 	public static void main(String[] args) throws SQLException 
 	{
 		Starter s = new Starter();
 		System.out.println("Hello Database");
 	}
-	
 	public void AccendiGui(){
 		Login= new LoginGui(this);
 		Login.setVisible(true);
 	}
-	
 	public void AccediRegister() {
 		Login.setVisible(false);
 		Register = new RegisterGui(this);
 		Register.setVisible(true);
 	}
-	
-	
-	public DipendenteDAOPostgres getDAO1() {
-		return DAO1;
-	}
-
-	public ClienteDAOPostgres getDAO2() {
-		return DAO2;
-	}
-	
-	public ProdottoDAOPostgres getDAO3() {
-		return DAO3;
-	}
-
-	public LoginGui getLogin() {
-		return Login;
-	}
-
-	public void setLogin(LoginGui login) {
-		Login = login;
-	}
-
-	public RegisterGui getRegister() {
-		return Register;
-	}
-
-	public void setRegister(RegisterGui register) 
-	{
-		Register = register;
-	}
-	
 	public void AccendiNegozioInfoCliente() 
 	{
 		Login.setVisible(false);
@@ -87,7 +52,6 @@ public class Starter {
 		Negozio.setVisible(true);
 		Negozio.getProfiloLabel().setText("Ciao "+DAO2.getClienti().get(IdLogin-1).getNome()+" il tuo Saldo è di "+ DAO2.getClienti().get(IdLogin-1).getSaldo()+"€");
 	}
-	
 	public void RiempiDAO()
 	{
 		DAO1.CopiaDB();
@@ -96,22 +60,16 @@ public class Starter {
 		System.out.println(DAO1.getDipendenti());
 		System.out.println(DAO2.getClienti());
 		System.out.println(DAO3.getMagazzino());
-	}
-		
+	}	
 	public int Random(int range) 
     {
         Random rand = new Random();
         return(1+rand.nextInt(range));
     }
-
-	public int getIdLogin() {
-		return IdLogin;
+	public double Round(Double x) 
+	{
+		return Math.round(x * 100.0) / 100.0;
 	}
-
-	public void setIdLogin(int idLogin) {
-		IdLogin = idLogin;
-	}
-
 	public void LogOutNegozio() {
 		this.DAO2.getClienti().get(IdLogin-1).getCarrello().removeAll(this.DAO2.getClienti().get(IdLogin-1).getCarrello());
 		this.RemoveDAO();
@@ -133,13 +91,11 @@ public class Starter {
 					return true;
 				}
 			} catch (NumberFormatException nfe) {
-				return false;
-				
+				return false;	
 			}catch (SQLException e1) {
 				System.out.println(e1);
 				return false;
 			}
-			
 		}
 		return false;
 	}
@@ -153,4 +109,54 @@ public class Starter {
 		}
 	return false;
 	}
+	public void RiempiTabellaNegozio(DefaultTableModel x) 
+	{
+		for(ClassiDB.Prodotto e : this.DAO3.getMagazzino()) 
+		{
+			Object o[] = {e.getNome(),e.getPrezzo(),e.getQuantita(),e.getDataProdRacc(),e.getDataScadenza(),e.getDataMungitura(),e.getTipo(),e.getIdProdotto()};
+			x.addRow(o);
+		}	
+	}
+	public void SpegniColonna(String Colonna,JTable t) 
+	{
+		if(t.getColumn(Colonna).getWidth()>0) 
+		{
+			t.getColumn(Colonna).setMinWidth(0); 
+			t.getColumn(Colonna).setMaxWidth(0);
+			t.getColumn(Colonna).setWidth(0);
+		}
+	}
+	public void RinominaTabella(int index,String Nome,JTable t) 
+	{
+		t.getTableHeader().getColumnModel().getColumn(index).setHeaderValue(Nome);
+		t.getTableHeader().repaint();
+	}
+	public int getIdLogin() {
+		return IdLogin;
+	}
+	public void setIdLogin(int idLogin) {
+		IdLogin = idLogin;
+	}
+	public DipendenteDAOPostgres getDAO1() {
+		return DAO1;
+	}
+	public ClienteDAOPostgres getDAO2() {
+		return DAO2;
+	}
+	public ProdottoDAOPostgres getDAO3() {
+		return DAO3;
+	}
+	public LoginGui getLogin() {
+		return Login;
+	}
+	public void setLogin(LoginGui login) {
+		Login = login;
+	}
+	public RegisterGui getRegister() {
+		return Register;
+	}
+	public void setRegister(RegisterGui register) {
+		Register = register;
+	}
+	
 }

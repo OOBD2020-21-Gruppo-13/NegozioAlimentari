@@ -32,7 +32,7 @@ public class RegisterGui extends JFrame {
 	private JPasswordField PasswordField;
 
 
-	public RegisterGui(Starter temp) {
+	public RegisterGui(Starter temp){
 		Controller = temp;
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,7 +48,7 @@ public class RegisterGui extends JFrame {
 		NomeField.setColumns(10);
 		
 		JButton RegisterButton = new JButton("Registrati");
-		RegisterButton.addActionListener(new ActionListener() {
+		RegisterButton.addActionListener(new ActionListener(){
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				try {

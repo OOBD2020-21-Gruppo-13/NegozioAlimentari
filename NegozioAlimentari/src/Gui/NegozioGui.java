@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import Main.Starter;
 import javax.swing.JLabel;
@@ -25,6 +26,7 @@ public class NegozioGui extends JFrame {
 	private JLabel ProfiloLabel;
 	Starter Controller;
 	private JTable table;
+	private DefaultTableModel tb;
 	
 	
 	public NegozioGui(Starter Temp) {
@@ -77,7 +79,29 @@ public class NegozioGui extends JFrame {
 		scrollPane.setBounds(10, 45, 1074, 505);
 		contentPane.add(scrollPane);
 		
-		table = new JTable();
+		tb = new DefaultTableModel();
+		table = new JTable(tb) {
+	        public boolean isCellEditable(int row, int column) {                
+	                return false;               
+	        };
+
+	    };
+	    
+	    tb.setColumnCount(8);
+	    Controller.RinominaTabella(0,"Nome Prodotto",table);
+	    Controller.RinominaTabella(1,"Prezzo",table);
+	    Controller.RinominaTabella(2,"Quantita",table);
+	    Controller.RinominaTabella(3,"Data",table);
+	    Controller.RinominaTabella(4,"DataScadenza",table);
+	    Controller.RinominaTabella(5,"DataMungitura",table);
+	    Controller.RinominaTabella(6,"Tipo",table);
+	    Controller.RinominaTabella(7,"Id",table);
+	    Controller.SpegniColonna("DataMungitura",table);
+	    Controller.SpegniColonna("Tipo",table);
+	    Controller.SpegniColonna("Id",table);
+	    Controller.RiempiTabellaNegozio(tb);
+	    table.setAutoCreateRowSorter(true);
+		table.getTableHeader().setReorderingAllowed(false);
 		scrollPane.setViewportView(table);
 		
 		JLabel LogOutLabel = new JLabel("Esci dal Negozio");
