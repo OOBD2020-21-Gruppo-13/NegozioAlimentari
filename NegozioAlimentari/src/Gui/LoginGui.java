@@ -38,7 +38,7 @@ public class LoginGui extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+	
 		UsernameField = new JTextField();
 		UsernameField.setBounds(179, 84, 86, 20);
 		contentPane.add(UsernameField);

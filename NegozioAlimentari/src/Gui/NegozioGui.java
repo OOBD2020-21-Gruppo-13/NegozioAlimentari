@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import Main.Starter;
 import javax.swing.JLabel;
@@ -27,6 +28,7 @@ public class NegozioGui extends JFrame {
 	Starter Controller;
 	private JTable table;
 	private DefaultTableModel tb;
+	private TableRowSorter<DefaultTableModel> sorter = null;
 	
 	
 	public NegozioGui(Starter Temp) {
@@ -37,7 +39,6 @@ public class NegozioGui extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
 		ProfiloLabel = new JLabel("");
 		ProfiloLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		ProfiloLabel.setBounds(10, 11, 248, 23);
@@ -46,28 +47,66 @@ public class NegozioGui extends JFrame {
 		JButton ButtonFrutta = new JButton("Frutta");
 		ButtonFrutta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Controller.SorterColonna("Frutta",6,table,sorter);
+				Controller.RinominaTabella(3,"DataRaccolta",table); 
+				Controller.SpegniColonna("DataMungitura",table);
 			}
 		});
 		ButtonFrutta.setBounds(297, 11, 89, 23);
 		contentPane.add(ButtonFrutta);
 		
 		JButton ButtonVerdura = new JButton("Verdura");
+		ButtonVerdura.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Controller.SorterColonna("Verdura",6,table,sorter);
+				Controller.RinominaTabella(3,"DataRaccolta",table); 
+				Controller.SpegniColonna("DataMungitura",table);
+			}
+		});
 		ButtonVerdura.setBounds(391, 11, 89, 23);
 		contentPane.add(ButtonVerdura);
 		
 		JButton ButtonConfezionati = new JButton("Confezionati");
+		ButtonConfezionati.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Controller.SorterColonna("Confezionato",6,table,sorter);
+				Controller.RinominaTabella(3,"DataProduzione",table); 
+				Controller.SpegniColonna("DataMungitura",table);
+			}
+		});
 		ButtonConfezionati.setBounds(485, 11, 112, 23);
 		contentPane.add(ButtonConfezionati);
 		
 		JButton ButtonUova = new JButton("Uova");
+		ButtonUova.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Controller.SorterColonna("Uova",6,table,sorter);
+				Controller.RinominaTabella(3,"DataProduzione",table); 
+				Controller.SpegniColonna("DataMungitura",table);
+			}
+		});
 		ButtonUova.setBounds(602, 11, 89, 23);
 		contentPane.add(ButtonUova);
 		
 		JButton ButtonLatticini = new JButton("Latticini");
+		ButtonLatticini.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Controller.SorterColonna("Latticino",6,table,sorter);
+				Controller.RinominaTabella(3,"DataProduzione",table); 
+				Controller.SpegniColonna("DataMungitura",table);
+			}
+		});
 		ButtonLatticini.setBounds(696, 11, 89, 23);
 		contentPane.add(ButtonLatticini);
 		
 		JButton ButtonFarinacei = new JButton("Farinacei");
+		ButtonFarinacei.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Controller.SorterColonna("Farinaceo",6,table,sorter);
+				Controller.RinominaTabella(3,"DataProduzione",table); 
+				Controller.SpegniColonna("DataMungitura",table);
+			}
+		});
 		ButtonFarinacei.setBounds(790, 11, 89, 23);
 		contentPane.add(ButtonFarinacei);
 		
@@ -75,6 +114,8 @@ public class NegozioGui extends JFrame {
 		ButtonCarrello.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Controller.AccendiCarrello();
+				Controller.RinominaTabella(3,"DataProduzione",table); 
+				Controller.SpegniColonna("DataMungitura",table);
 			}
 		});
 		ButtonCarrello.setBounds(884, 11, 89, 23);
@@ -114,6 +155,9 @@ public class NegozioGui extends JFrame {
 	    Controller.RiempiTabellaNegozio(tb);
 	    table.setAutoCreateRowSorter(true);
 		table.getTableHeader().setReorderingAllowed(false);
+		sorter = new TableRowSorter<DefaultTableModel>(tb);
+		table.setRowSorter(this.sorter);
+		Controller.SorterColonna("/*/",6,table,sorter);
 		scrollPane.setViewportView(table);
 		
 		JLabel LogOutLabel = new JLabel("Esci dal Negozio");

@@ -3,7 +3,10 @@ import java.sql.*;
 import java.util.*;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
 import DaoImplements.*;
 import Database.DBConnection;
 import Gui.CarrelloGui;
@@ -145,15 +148,17 @@ public class Starter {
 		t.getTableHeader().getColumnModel().getColumn(index).setHeaderValue(Nome);
 		t.getTableHeader().repaint();
 	}
-	
-
 	public void InserisciProdottoCarrello(int id,int quantita) 
 	{
 		ClassiDB.Prodotto p = new ClassiDB.Prodotto (quantita,id,this.DAO3.getMagazzino().get(id-1).getPrezzo(),this.DAO3.getMagazzino().get(id-1).getNome());
 		this.DAO2.getClienti().get(this.IdLogin-1).getCarrello().add(p);
 		this.DAO3.getMagazzino().get(id-1).setQuantita(this.DAO3.getMagazzino().get(id-1).getQuantita()-quantita);
 	}
-	
+	public void SorterColonna(String Tipo,int index,JTable table,TableRowSorter<DefaultTableModel> sorter) 
+	{
+		table.setRowSorter(sorter);
+		sorter.setRowFilter(RowFilter.regexFilter(Tipo, index));
+	}
 	public int getIdLogin() {
 		return IdLogin;
 	}
