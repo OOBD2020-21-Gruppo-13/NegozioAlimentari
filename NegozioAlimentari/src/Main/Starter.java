@@ -6,6 +6,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import DaoImplements.*;
 import Database.DBConnection;
+import Gui.CarrelloGui;
 import Gui.LoginGui;
 import Gui.NegozioGui;
 import Gui.RegisterGui;
@@ -17,6 +18,7 @@ public class Starter {
     LoginGui Login;
     RegisterGui Register;
     NegozioGui Negozio;
+    CarrelloGui Carrello;
     DipendenteDAOPostgres DAO1;
     ClienteDAOPostgres DAO2;
     ProdottoDAOPostgres DAO3;
@@ -58,6 +60,11 @@ public class Starter {
 		Negozio = new NegozioGui(this);
 		Negozio.setVisible(true);
 		Negozio.getProfiloLabel().setText("Ciao "+DAO2.getClienti().get(IdLogin-1).getNome()+" il tuo Saldo è di "+ DAO2.getClienti().get(IdLogin-1).getSaldo()+"€");
+	}
+	public void AccendiCarrello(){
+		Negozio.setVisible(false);
+		Carrello = new CarrelloGui(this);
+		Carrello.setVisible(true);
 	}
 	public void RiempiDAO()
 	{
@@ -146,9 +153,6 @@ public class Starter {
 		this.DAO2.getClienti().get(this.IdLogin-1).getCarrello().add(p);
 		this.DAO3.getMagazzino().get(id-1).setQuantita(this.DAO3.getMagazzino().get(id-1).getQuantita()-quantita);
 	}
-	
-	
-	
 	
 	public int getIdLogin() {
 		return IdLogin;

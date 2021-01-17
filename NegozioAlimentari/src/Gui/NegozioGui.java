@@ -72,6 +72,11 @@ public class NegozioGui extends JFrame {
 		contentPane.add(ButtonFarinacei);
 		
 		JButton ButtonCarrello = new JButton("Carrello");
+		ButtonCarrello.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Controller.AccendiCarrello();
+			}
+		});
 		ButtonCarrello.setBounds(884, 11, 89, 23);
 		contentPane.add(ButtonCarrello);
 		
@@ -79,7 +84,14 @@ public class NegozioGui extends JFrame {
 		scrollPane.setBounds(10, 45, 1074, 505);
 		contentPane.add(scrollPane);
 		
-		tb = new DefaultTableModel();
+		tb = new DefaultTableModel() 
+        {
+            @Override
+            public Class getColumnClass(int column) 
+            {
+                return Integer.class;
+            }
+        };
 		table = new JTable(tb) {
 	        public boolean isCellEditable(int row, int column) {                
 	                return false;               
