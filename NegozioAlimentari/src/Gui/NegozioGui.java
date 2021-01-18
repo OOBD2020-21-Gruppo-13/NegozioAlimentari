@@ -113,9 +113,8 @@ public class NegozioGui extends JFrame {
 		JButton ButtonCarrello = new JButton("Carrello");
 		ButtonCarrello.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Controller.AccendiCarrello();
-				Controller.RinominaTabella(3,"DataProduzione",table); 
-				Controller.SpegniColonna("DataMungitura",table);
+				//Controller.AccendiCarrello();
+				System.out.println(Controller.getDAO2().getClienti().get(Controller.getIdLogin()-1).getCarrello());
 			}
 		});
 		ButtonCarrello.setBounds(884, 11, 89, 23);
@@ -139,6 +138,12 @@ public class NegozioGui extends JFrame {
 	        };
 
 	    };
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Controller.InserimentoCarrello(table);				
+			}
+		});
 	    
 	    tb.setColumnCount(8);
 	    Controller.RinominaTabella(0,"Nome Prodotto",table);

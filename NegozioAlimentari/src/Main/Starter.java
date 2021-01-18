@@ -38,15 +38,7 @@ public class Starter {
 	}
 	public static void main(String[] args) throws SQLException 
 	{
-		Starter s = new Starter();
-		Scanner Tastiera = new Scanner(System.in);
-		System.out.println("Hello Database");
-		System.out.println("Inserisci id da comprare:");
-		int id = Tastiera.nextInt();
-		System.out.println("Inserisci quantita da comprare:");
-		int quantita = Tastiera.nextInt();
-		s.InserisciProdottoCarrello(id,quantita);
-		System.out.println(s.DAO2.getClienti().get(s.IdLogin-1).getCarrello());
+		Starter s = new Starter();		
 	}
 	public void AccendiGui(){
 		Login= new LoginGui(this);
@@ -159,6 +151,45 @@ public class Starter {
 		table.setRowSorter(sorter);
 		sorter.setRowFilter(RowFilter.regexFilter(Tipo, index));
 	}
+	public void InserimentoCarrello(JTable table) 
+    {
+        int index = table.getSelectedRow();
+        int id = (int) table.getValueAt(index, 7);
+        int decisone = JOptionPane.showConfirmDialog(null,"Vuoi aggiungere "+this.DAO3.getMagazzino().get(id-1).getNome()+" al carrello?","Aggiungi carrello",JOptionPane.YES_NO_OPTION);
+        if(decisone == 0) 
+        {
+            int quantita = ChiediQuantita(id);
+            if(quantita>0)
+            InserisciProdottoCarrello(id, quantita);
+        }
+    }
+    public int ChiediQuantita(int id) 
+    {
+        String temp=null;
+        int quantita=0;
+        do {
+            temp = JOptionPane.showInputDialog(null,"Inserisci quantita");
+            if(temp!= null && temp.isEmpty()!=true) 
+            {
+                try 
+                {
+                    quantita = Integer.parseInt(temp);
+                }catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Hai inserito dei valori sbagliati");
+                    break;
+                }
+                if(quantita<=0) 
+                {
+                    JOptionPane.showMessageDialog(null, "Hai inserito una quantita non valida");
+                }else if(quantita<=this.DAO3.getMagazzino().get(id-1).getQuantita()) {
+                    return quantita;
+                }else {
+                    JOptionPane.showMessageDialog(null, "Hai inserito una quantita non valida");
+                }
+            }else break;
+        } while (true);
+        return 0;
+    }
 	public int getIdLogin() {
 		return IdLogin;
 	}
