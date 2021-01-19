@@ -7,6 +7,9 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
+import ClassiDB.Cliente;
+import ClassiDB.Dipendente;
+import ClassiDB.Prodotto;
 import DaoImplements.*;
 import Database.DBConnection;
 import Gui.CarrelloGui;
@@ -25,7 +28,9 @@ public class Starter {
     DipendenteDAOPostgres DAO1;
     ClienteDAOPostgres DAO2;
     ProdottoDAOPostgres DAO3;
-    int IdLogin;
+    List<Prodotto> Magazzino;
+    Cliente IlCliente;
+    Dipendente IlDipendente;
    
 	public Starter() throws SQLException 
 	{
@@ -54,22 +59,13 @@ public class Starter {
 		Login.setVisible(false);
 		Negozio = new NegozioGui(this);
 		Negozio.setVisible(true);
-		Negozio.getProfiloLabel().setText("Ciao "+DAO2.getClienti().get(IdLogin-1).getNome()+" il tuo Saldo è di "+ DAO2.getClienti().get(IdLogin-1).getSaldo()+"€");
+		Negozio.getProfiloLabel().setText("Ciao "+this.IlCliente.getNome()+" il tuo Saldo è di "+this.IlCliente.getSaldo()+"€");
 	}
 	public void AccendiCarrello(){
 		Negozio.setVisible(false);
 		Carrello = new CarrelloGui(this);
 		Carrello.setVisible(true);
 	}
-	public void RiempiDAO()
-	{
-		DAO1.CopiaDB();
-		DAO2.CopiaDB();
-		DAO3.CopiaDB();
-		System.out.println(DAO1.getDipendenti());
-		System.out.println(DAO2.getClienti());
-		System.out.println(DAO3.getMagazzino());
-	}	
 	public int Random(int range) 
     {
         Random rand = new Random();
@@ -80,22 +76,16 @@ public class Starter {
 		return Math.round(x * 100.0) / 100.0;
 	}
 	public void LogOutNegozio() {
-		this.DAO2.getClienti().get(IdLogin-1).getCarrello().removeAll(this.DAO2.getClienti().get(IdLogin-1).getCarrello());
-		this.RemoveDAO();
+		this.IlCliente.getCarrello().removeAll(this.IlCliente.getCarrello());
 		Negozio.setVisible(false);
 		Login.setVisible(true);
-	}
-	public void RemoveDAO() {
-		DAO1.getDipendenti().removeAll(DAO1.getDipendenti());
-		DAO2.getClienti().removeAll(DAO2.getClienti());
-		DAO3.getMagazzino().removeAll(DAO3.getMagazzino());
 	}
 	public boolean LoginButtonGui(String Username, String Password) {
 		if(Username!= null && Username.isEmpty()!=true && Password!= null && Password.isEmpty()!=true) {
 			try {
 				if(this.getDAO2().Login(Integer.parseInt(Username), Password) > 0) {
-					this.RiempiDAO();
-					this.IdLogin = this.getDAO2().Login(Integer.parseInt(Username), Password);
+					this.Magazzino = this.getDAO3().CopiaDB();
+					this.IlCliente = this.getDAO2().CopiaDB(Integer.parseInt(Username));
 					this.AccendiNegozioInfoCliente();
 					return true;
 				}
@@ -120,7 +110,7 @@ public class Starter {
 	}
 	public void RiempiTabellaNegozio(DefaultTableModel x) 
 	{
-		for(ClassiDB.Prodotto e : this.DAO3.getMagazzino()) 
+		for(ClassiDB.Prodotto e : this.Magazzino) 
 		{
 			Object o[] = {e.getNome(),e.getPrezzo(),e.getQuantita(),e.getDataProdRacc(),e.getDataScadenza(),e.getDataMungitura(),e.getTipo(),e.getIdProdotto()};
 			x.addRow(o);
@@ -142,9 +132,9 @@ public class Starter {
 	}
 	public void InserisciProdottoCarrello(int id,int quantita) 
 	{
-		ClassiDB.Prodotto p = new ClassiDB.Prodotto (quantita,id,this.DAO3.getMagazzino().get(id-1).getPrezzo(),this.DAO3.getMagazzino().get(id-1).getNome());
-		this.DAO2.getClienti().get(this.IdLogin-1).getCarrello().add(p);
-		this.DAO3.getMagazzino().get(id-1).setQuantita(this.DAO3.getMagazzino().get(id-1).getQuantita()-quantita);
+		ClassiDB.Prodotto p = new ClassiDB.Prodotto (quantita,id,this.Magazzino.get(id-1).getPrezzo(),this.Magazzino.get(id-1).getNome());
+		this.IlCliente.getCarrello().add(p);
+		this.Magazzino.get(id-1).setQuantita(this.Magazzino.get(id-1).getQuantita()-quantita);
 	}
 	public void SorterColonna(String Tipo,int index,JTable table,TableRowSorter<DefaultTableModel> sorter) 
 	{
@@ -155,7 +145,7 @@ public class Starter {
     {
         int index = table.getSelectedRow();
         int id = (int) table.getValueAt(index, 7);
-        int decisone = JOptionPane.showConfirmDialog(null,"Vuoi aggiungere "+this.DAO3.getMagazzino().get(id-1).getNome()+" al carrello?","Aggiungi carrello",JOptionPane.YES_NO_OPTION);
+        int decisone = JOptionPane.showConfirmDialog(null,"Vuoi aggiungere "+this.Magazzino.get(id-1).getNome()+" al carrello?","Aggiungi carrello",JOptionPane.YES_NO_OPTION);
         if(decisone == 0) 
         {
             int quantita = ChiediQuantita(id);
@@ -181,7 +171,7 @@ public class Starter {
                 if(quantita<=0) 
                 {
                     JOptionPane.showMessageDialog(null, "Hai inserito una quantita non valida");
-                }else if(quantita<=this.DAO3.getMagazzino().get(id-1).getQuantita()) {
+                }else if(quantita<=this.Magazzino.get(id-1).getQuantita()) {
                     return quantita;
                 }else {
                     JOptionPane.showMessageDialog(null, "Hai inserito una quantita non valida");
@@ -190,12 +180,6 @@ public class Starter {
         } while (true);
         return 0;
     }
-	public int getIdLogin() {
-		return IdLogin;
-	}
-	public void setIdLogin(int idLogin) {
-		IdLogin = idLogin;
-	}
 	public DipendenteDAOPostgres getDAO1() {
 		return DAO1;
 	}
@@ -217,5 +201,8 @@ public class Starter {
 	public void setRegister(RegisterGui register) {
 		Register = register;
 	}
-	
+	public void PrintaCarrelloDebug() 
+	{
+		System.out.println(this.IlCliente.getCarrello());
+	}
 }

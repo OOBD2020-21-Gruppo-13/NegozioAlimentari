@@ -11,7 +11,6 @@ public class DipendenteDAOPostgres implements DipendenteDAO {
 
 	Connection con = null;
 	Starter Controller;
-	ArrayList<Dipendente> Dipendenti = new ArrayList<Dipendente>();
 	
 public  DipendenteDAOPostgres(Connection connection,Starter temp) { 
 	this.con=connection;
@@ -19,42 +18,23 @@ public  DipendenteDAOPostgres(Connection connection,Starter temp) {
   }
 
 @Override
-public void CopiaDB() 
+public Dipendente CopiaDB(int Id) throws SQLException
 {
-	try 
-    {										
-    PreparedStatement st = con.prepareStatement("select * from dipendente order by iddipendente");
+											
+    PreparedStatement st = con.prepareStatement("select * from dipendente where iddipendente = ? ");
+    st.setInt(1, Id);
     ResultSet rs = st.executeQuery();
+    Dipendente d = null;
 
     while(rs.next())
     {
-     	int id = rs.getInt("iddipendente");
-     	String Nome = rs.getString("nome");
-     	String Cognome = rs.getString("cognome");
-     	
-     	Dipendente d = new Dipendente(Nome, Cognome,id);
-    	this.Dipendenti.add(d);
+     	d = new Dipendente(rs.getString("nome"), rs.getString("cognome"),rs.getInt("iddipendente"));
     }
     
     rs.close();
     st.close();
-    
-    }
-    catch(SQLException e) 
-    {
-        System.out.println("SQL Exception: \n"+e);
-    }
+    return d;
 }
-
-public ArrayList<Dipendente> getDipendenti() {
-	return Dipendenti;
-}
-
-public void setDipendenti(ArrayList<Dipendente> dipendenti) {
-	Dipendenti = dipendenti;
-}
-
-
 
 }
 

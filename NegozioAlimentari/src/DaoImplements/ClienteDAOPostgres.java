@@ -11,45 +11,29 @@ import Main.Starter;
 public class ClienteDAOPostgres implements ClienteDAO {
 
 	Connection con = null;
-    ArrayList<Cliente> Clienti = new ArrayList<Cliente>();
     Starter Controller = null;
 
 public ClienteDAOPostgres(Connection connection, Starter temp) { 
     this.con=connection;
-    this.Controller= temp;
-        
+    this.Controller= temp;     
   }
 
 @Override
-public void CopiaDB() 
+public Cliente CopiaDB(int Id) throws SQLException
 {
-	try 
-    {
-    PreparedStatement st = con.prepareStatement("SELECT * FROM cliente ORDER BY idtessera");
+    PreparedStatement st = con.prepareStatement("SELECT * FROM cliente WHERE idtessera = ?");
+    st.setInt(1, Id);
     ResultSet rs = st.executeQuery();
-
-
+    Cliente c = null;
+    
     while(rs.next())
     {
-         String Nome = rs.getString("nome");
-         String Cognome = rs.getString("cognome");
-         int id = rs.getInt("idtessera");
-         Double Punti = rs.getDouble("puntifedelta");
-         Double Saldo = rs.getDouble("saldo");
-
-         Cliente c = new Cliente(Nome, Cognome, id,Saldo, Punti);
-        this.Clienti.add(c);
+         c = new Cliente(rs.getString("nome"), rs.getString("cognome"), rs.getInt("idtessera"), rs.getDouble("saldo"), rs.getDouble("puntifedelta"));    
     }
-
-
+    
     rs.close();
     st.close();
-
-    }
-    catch(SQLException e) 
-    {
-        System.out.println("SQL Exception: \n"+e);
-    }
+    return c;
 }
 
 public int RicavoId() throws SQLException 
@@ -95,17 +79,5 @@ public int Login(int Username,String Password) throws SQLException
 	}else return 0;
 }
 
-public ArrayList<Cliente> getClienti() {
-	return Clienti;
-}
-
-public void setClienti(ArrayList<Cliente> clienti) {
-	Clienti = clienti;
-}
-
-
-
-
-	
 
 }

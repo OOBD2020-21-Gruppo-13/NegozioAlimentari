@@ -1,6 +1,8 @@
 package DaoImplements;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
+
 import ClassiDB.Prodotto;
 import Dao.ProdottoDAO;
 import Main.Starter;
@@ -8,7 +10,6 @@ import Main.Starter;
 public class ProdottoDAOPostgres implements ProdottoDAO{
 
 	Connection con=null;
-	ArrayList<Prodotto> Magazzino = new ArrayList<>();
 	Starter Controller= null;
 	
 public ProdottoDAOPostgres(Connection connection, Starter temp) { 
@@ -17,53 +18,30 @@ public ProdottoDAOPostgres(Connection connection, Starter temp) {
    	
   }
 
-
 @Override
-public void CopiaDB()
-{
-	try 
-    {										
+public List<Prodotto> CopiaDB() throws SQLException
+{										
     PreparedStatement st = con.prepareStatement("SELECT * FROM prodotto ORDER BY idprodotto");
     ResultSet rs = st.executeQuery();
-
+    ArrayList<Prodotto> Magazzino = new ArrayList<Prodotto>();
     while(rs.next())
     {
-    	String nome=rs.getString("nome");
-    	String tipo=rs.getString("Tipo");
-    	double prezzo=rs.getDouble("prezzo");
-    	int quantita=rs.getInt("quantitamag");
-    	int idProdotto=rs.getInt("idprodotto");
-    	Date dataScadenza=rs.getDate("datascadenza");
-    	Date dataProdRacc=rs.getDate("dataprodracc");
-    	Prodotto p = new Prodotto(nome,tipo,prezzo,quantita,idProdotto,dataScadenza,dataProdRacc);
+    	String tipo = rs.getString("Tipo");
+    	Prodotto p = new Prodotto(rs.getString("nome"),tipo,rs.getDouble("prezzo"),rs.getInt("quantitamag"),rs.getInt("idprodotto"),rs.getDate("datascadenza"),rs.getDate("dataprodracc"));
     	switch(tipo) 
     	{
 			case "Farinaceo","Confezionato","Uova","Frutta","Verdura":
 				Magazzino.add(p);
 				break;
 			case "Latticino":
-				Date DataMungitura = rs.getDate("datamungitura");
-				p.setDataMungitura(DataMungitura);
+				p.setDataMungitura(rs.getDate("datamungitura"));
 				Magazzino.add(p);
 				break;
     	}	
     }
-    
     rs.close();
     st.close();
-   
-    }
-    catch(SQLException e) 
-    {
-        System.out.println("SQL Exception: \n"+e);
-    }
-}
-
-public ArrayList<Prodotto> getMagazzino() {
-	return Magazzino;
-}
-
-
-	
+    return Magazzino;
+    } 
 
 }

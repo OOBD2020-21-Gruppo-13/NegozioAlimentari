@@ -1,6 +1,10 @@
 package Dao;
 
+import java.sql.SQLException;
+
+import ClassiDB.Dipendente;
+
 public interface DipendenteDAO {
 
-	public void CopiaDB();
+	public Dipendente CopiaDB(int Id) throws SQLException;
 }

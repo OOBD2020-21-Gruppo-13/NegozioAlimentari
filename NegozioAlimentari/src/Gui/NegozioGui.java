@@ -41,7 +41,7 @@ public class NegozioGui extends JFrame {
 		contentPane.setLayout(null);
 		ProfiloLabel = new JLabel("");
 		ProfiloLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		ProfiloLabel.setBounds(10, 11, 248, 23);
+		ProfiloLabel.setBounds(10, 11, 277, 23);
 		contentPane.add(ProfiloLabel);
 		
 		JButton ButtonFrutta = new JButton("Frutta");
@@ -114,7 +114,7 @@ public class NegozioGui extends JFrame {
 		ButtonCarrello.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Controller.AccendiCarrello();
-				System.out.println(Controller.getDAO2().getClienti().get(Controller.getIdLogin()-1).getCarrello());
+				Controller.PrintaCarrelloDebug();
 			}
 		});
 		ButtonCarrello.setBounds(884, 11, 89, 23);
