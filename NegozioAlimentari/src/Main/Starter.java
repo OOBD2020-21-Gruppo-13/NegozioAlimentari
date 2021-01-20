@@ -66,6 +66,11 @@ public class Starter {
 		Carrello = new CarrelloGui(this);
 		Carrello.setVisible(true);
 	}
+	public void SpegniCarrello() 
+    {
+        Carrello.setVisible(false);
+        Negozio.setVisible(true);
+    }
 	public int Random(int range) 
     {
         Random rand = new Random();
@@ -116,6 +121,14 @@ public class Starter {
 			x.addRow(o);
 		}	
 	}
+	public void RiempiTabellaCarrello(DefaultTableModel x) 
+    {
+        for(ClassiDB.Prodotto e : this.IlCliente.getCarrello()) 
+        {
+            Object o[] = {e.getNome(),e.getPrezzo(),e.getQuantita(),e.getIdProdotto()};
+            x.addRow(o);
+        }
+    }
 	public void SpegniColonna(String Colonna,JTable t) 
 	{
 		if(t.getColumn(Colonna).getWidth()>0) 

@@ -113,7 +113,7 @@ public class NegozioGui extends JFrame {
 		JButton ButtonCarrello = new JButton("Carrello");
 		ButtonCarrello.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Controller.AccendiCarrello();
+				Controller.AccendiCarrello();
 				Controller.PrintaCarrelloDebug();
 			}
 		});
