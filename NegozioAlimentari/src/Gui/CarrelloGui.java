@@ -46,6 +46,7 @@ public class CarrelloGui extends JFrame {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				Controller.RimuoveElementoCarello(table.getSelectedRow(), tb);
 			}
 		});
 		scrollPane.setViewportView(table);

@@ -193,6 +193,49 @@ public class Starter {
         } while (true);
         return 0;
     }
+    public void RemoveTable(DefaultTableModel x) 
+    {
+     int righe = x.getRowCount();
+     if(righe>0) 
+     {
+      for(int a=righe;a>0;a--) 
+      {
+       x.removeRow(a-1);
+      }
+     }
+    }
+    public void RimuoveElementoCarello(int id,DefaultTableModel x) 
+	{
+		int quantita=0;
+			do {
+				String temp = JOptionPane.showInputDialog(null,"Inserisci quantita da eliminare");
+				System.out.println(temp);
+				if(temp!= null && temp.isEmpty()!=true) 
+				{
+					try {
+						quantita = Integer.parseInt(temp);
+					} catch (NumberFormatException e) {
+						JOptionPane.showMessageDialog(null, "Hai inserito dei valori sbagliati");
+						break;
+					}
+					if(quantita<=this.IlCliente.getCarrello().get(id).getQuantita()) 
+					{
+						int idprodotto = (int) x.getValueAt(id, 3);
+						this.Magazzino.get(idprodotto-1).setQuantita(this.Magazzino.get(idprodotto-1).getQuantita()+quantita);
+						this.IlCliente.getCarrello().get(id).setQuantita(this.IlCliente.getCarrello().get(id).getQuantita()-quantita);
+						if(this.IlCliente.getCarrello().get(id).getQuantita()==0) 
+						{
+							this.IlCliente.getCarrello().remove(id);
+						}
+						this.RemoveTable(x);
+						this.RiempiTabellaCarrello(x);
+						break;
+					}else {
+							JOptionPane.showMessageDialog(null, "Hai inserito una quantita non valida");
+					}
+				}else break;
+			} while (true);
+	}
 	public DipendenteDAOPostgres getDAO1() {
 		return DAO1;
 	}
