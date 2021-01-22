@@ -85,6 +85,11 @@ public class Starter {
 		Negozio.setVisible(false);
 		Login.setVisible(true);
 	}
+	public void Reboot() {
+		this.IlCliente.getCarrello().removeAll(this.IlCliente.getCarrello());
+		Carrello.setVisible(false);
+		Login.setVisible(true);
+	}
 	public boolean LoginButtonGui(String Username, String Password) {
 		if(Username!= null && Username.isEmpty()!=true && Password!= null && Password.isEmpty()!=true) {
 			try {
@@ -235,6 +240,30 @@ public class Starter {
 					}
 				}else break;
 			} while (true);
+	}
+    public double CalcoloCarrello() 
+	{
+	 double x=0;
+		for(ClassiDB.Prodotto p:this.IlCliente.getCarrello()) 
+		{
+			x = x+ ((p.getPrezzo())*(p.getQuantita()));
+		}
+		return Round(x);
+	}
+    public void PagaButton() 
+	{
+		if(this.IlCliente.getCarrello().isEmpty()!=true) 
+		{
+			int decisione = JOptionPane.showConfirmDialog(null,"Il tuo saldo è: "+this.IlCliente.getSaldo()+"€ a fronte di: " +this.CalcoloCarrello()+"€","Vuoi pagare?",JOptionPane.YES_NO_OPTION);
+			if(decisione == 0) 
+			{
+				if(this.IlCliente.getSaldo()>=this.CalcoloCarrello()) 
+				{
+				JOptionPane.showMessageDialog(null, "Pagamento avvenuto con successo\nArriverderci e torna a trovarci!");
+				this.Reboot();
+				}else JOptionPane.showMessageDialog(null, "Non hai abbastanza soldi, rimuovi qualche prodotto dal carrello");
+			}
+		}else JOptionPane.showMessageDialog(null, "Il carrello è vuoto, aggiungi qualche prodotto dal negozio");
 	}
 	public DipendenteDAOPostgres getDAO1() {
 		return DAO1;

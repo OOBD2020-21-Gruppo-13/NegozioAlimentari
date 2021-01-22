@@ -72,6 +72,7 @@ public class CarrelloGui extends JFrame {
 		lblNewLabel_1_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				Controller.PagaButton();
 			}
 		});
 		lblNewLabel_1_1.setForeground(Color.BLUE);
