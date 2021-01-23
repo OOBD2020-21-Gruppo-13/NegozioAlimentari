@@ -265,6 +265,10 @@ public class Starter {
 			}
 		}else JOptionPane.showMessageDialog(null, "Il carrello è vuoto, aggiungi qualche prodotto dal negozio");
 	}
+    public Double CalcoloPuntiTotale() 
+    {
+        return Round((CalcoloCarrello()*10)/100);
+    }
 	public DipendenteDAOPostgres getDAO1() {
 		return DAO1;
 	}
