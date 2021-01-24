@@ -80,13 +80,26 @@ public int Login(int Username,String Password) throws SQLException
 }
 
 @Override
-public void CreaAcquisto(int IdAcquisto,int IdCliente,Double PrezzoTotale,double PuntiTotale,ArrayList<ClassiDB.Prodotto> Carrello) throws SQLException 
+public int RicavoIdAcquisto() throws SQLException 
+{
+    Statement st = con.createStatement();
+    ResultSet rs = st.executeQuery("SELECT idacquisto FROM acquisto ORDER BY idacquisto DESC LIMIT 1");
+    if(rs.next()) {
+        return (rs.getInt("idacquisto")+1);
+    }else 
+    {
+        return 1;
+    }
+}
+
+@Override
+public void CreaAcquisto(int IdAcquisto,int IdCliente,Double PrezzoTotale,int IdDipendente,double PuntiTotale,ArrayList<ClassiDB.Prodotto> Carrello) throws SQLException 
 {
     PreparedStatement st = con.prepareStatement("INSERT INTO acquisto VALUES (?,?,?,?,?,?)");
     st.setInt(1, IdAcquisto);
     st.setInt(2, IdCliente);
     st.setDouble(3, PrezzoTotale);
-    st.setInt(4, 1);
+    st.setInt(4, IdDipendente);
     st.setDouble(5, PuntiTotale);
     st.setDate(6, new java.sql.Date(System.currentTimeMillis()));
     st.executeUpdate();

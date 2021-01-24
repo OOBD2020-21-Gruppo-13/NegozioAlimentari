@@ -36,5 +36,15 @@ public Dipendente CopiaDB(int Id) throws SQLException
     return d;
 }
 
+@Override
+public int NumeroDipendente() throws SQLException 
+{
+    Statement st = con.createStatement();
+    ResultSet rs = st.executeQuery("SELECT iddipendente FROM dipendente ORDER BY iddipendente DESC LIMIT 1");
+    if(rs.next()) {
+        return (rs.getInt("iddipendente"));
+    }else return 0;
+}
+
 }
 

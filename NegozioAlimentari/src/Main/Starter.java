@@ -251,23 +251,35 @@ public class Starter {
 		return Round(x);
 	}
     public void PagaButton() 
-	{
-		if(this.IlCliente.getCarrello().isEmpty()!=true) 
-		{
-			int decisione = JOptionPane.showConfirmDialog(null,"Il tuo saldo è: "+this.IlCliente.getSaldo()+"€ a fronte di: " +this.CalcoloCarrello()+"€","Vuoi pagare?",JOptionPane.YES_NO_OPTION);
-			if(decisione == 0) 
-			{
-				if(this.IlCliente.getSaldo()>=this.CalcoloCarrello()) 
-				{
-				JOptionPane.showMessageDialog(null, "Pagamento avvenuto con successo\nArriverderci e torna a trovarci!");
-				this.Reboot();
-				}else JOptionPane.showMessageDialog(null, "Non hai abbastanza soldi, rimuovi qualche prodotto dal carrello");
-			}
-		}else JOptionPane.showMessageDialog(null, "Il carrello è vuoto, aggiungi qualche prodotto dal negozio");
-	}
+    {
+        if(this.IlCliente.getCarrello().isEmpty()!=true) 
+        {
+            try {
+                int decisione = JOptionPane.showConfirmDialog(null,"Il tuo saldo è: "+this.IlCliente.getSaldo()+"€ a fronte di: " +this.CalcoloCarrello()+"€","Vuoi pagare?",JOptionPane.YES_NO_OPTION);
+                if(decisione == 0) 
+                {
+                    if(this.IlCliente.getSaldo()>=this.CalcoloCarrello()) 
+                    {
+                    int random= this.Random(this.DAO1.NumeroDipendente());
+                    this.IlDipendente = this.DAO1.CopiaDB(random);
+                    this.CreazioneDBAcquisto(random);
+                    JOptionPane.showMessageDialog(null, "Pagamento avvenuto con successo\nIl tuo ordine è stato portato a termine da: "+this.IlDipendente.getNome()+" "+this.IlDipendente.getCognome()+"\nArriverderci e torna a trovarci!");
+                    this.Reboot();
+                    }else JOptionPane.showMessageDialog(null, "Non hai abbastanza soldi, rimuovi qualche prodotto dal carrello");
+                }
+            } catch (SQLException e1) {
+                System.out.println(e1);
+            }
+        }else JOptionPane.showMessageDialog(null, "Il carrello è vuoto, aggiungi qualche prodotto dal negozio");
+    }
     public Double CalcoloPuntiTotale() 
     {
-        return Round((CalcoloCarrello()*10)/100);
+        return Round((CalcoloCarrello()*10/100));
+    }
+    public void CreazioneDBAcquisto(int random) throws SQLException 
+    {
+        this.getDAO2().CreaAcquisto(this.DAO2.RicavoIdAcquisto(),IlCliente.getIdTessera(), this.CalcoloCarrello(),random,this.CalcoloPuntiTotale(),this.IlCliente.getCarrello());
+        this.IlCliente.getCarrello().removeAll(this.IlCliente.getCarrello());
     }
 	public DipendenteDAOPostgres getDAO1() {
 		return DAO1;

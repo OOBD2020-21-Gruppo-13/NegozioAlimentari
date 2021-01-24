@@ -14,5 +14,7 @@ public interface ClienteDAO {
 	
 	public Cliente CopiaDB(int Id) throws SQLException;
 	
-	public void CreaAcquisto(int IdAcquisto, int IdCliente, Double PrezzoTotale, double PuntiTotale,ArrayList<Prodotto> Carrello) throws SQLException;
+	public void CreaAcquisto(int IdAcquisto, int IdCliente, Double PrezzoTotale, int IdDipendente, double PuntiTotale,ArrayList<Prodotto> Carrello) throws SQLException;
+
+	public int RicavoIdAcquisto() throws SQLException;
 }
