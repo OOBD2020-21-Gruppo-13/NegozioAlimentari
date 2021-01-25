@@ -40,6 +40,9 @@ public class Starter {
 	    DAO2 = new ClienteDAOPostgres(connection, this);
 	    DAO3 = new ProdottoDAOPostgres(connection, this);
         AccendiGui();
+        
+        System.out.println(DAO1.RiempiDati("select * from cliente_admin", "cliente_admin").length);
+        System.out.println(DAO1.RiempiColonne("cliente_admin").length);
 	}
 	public static void main(String[] args) throws SQLException 
 	{
