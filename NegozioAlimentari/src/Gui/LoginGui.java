@@ -78,5 +78,17 @@ public class LoginGui extends JFrame {
 		CreaAccountButton.setFont(new Font("Arial", Font.PLAIN, 15));
 		CreaAccountButton.setBounds(179, 201, 111, 20);
 		contentPane.add(CreaAccountButton);
+		
+		JLabel Amministrazione_1 = new JLabel("Amministrazione");
+		Amministrazione_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Controller.AccendiAdmin();
+			}
+		});
+		Amministrazione_1.setForeground(Color.BLUE);
+		Amministrazione_1.setFont(new Font("Arial", Font.PLAIN, 15));
+		Amministrazione_1.setBounds(10, 11, 111, 20);
+		contentPane.add(Amministrazione_1);
 	}
 }

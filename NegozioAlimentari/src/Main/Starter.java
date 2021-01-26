@@ -12,6 +12,7 @@ import ClassiDB.Dipendente;
 import ClassiDB.Prodotto;
 import DaoImplements.*;
 import Database.DBConnection;
+import Gui.AdminGui;
 import Gui.CarrelloGui;
 import Gui.LoginGui;
 import Gui.NegozioGui;
@@ -25,6 +26,7 @@ public class Starter {
     RegisterGui Register;
     NegozioGui Negozio;
     CarrelloGui Carrello;
+    AdminGui Admin;
     DipendenteDAOPostgres DAO1;
     ClienteDAOPostgres DAO2;
     ProdottoDAOPostgres DAO3;
@@ -68,6 +70,11 @@ public class Starter {
 		Negozio.setVisible(false);
 		Carrello = new CarrelloGui(this);
 		Carrello.setVisible(true);
+	}
+	public void AccendiAdmin() {
+		Login.setVisible(false);
+		Admin = new AdminGui(this);
+		Admin.setVisible(true);
 	}
 	public void SpegniCarrello() 
     {
