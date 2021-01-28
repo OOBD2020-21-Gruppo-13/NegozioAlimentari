@@ -72,6 +72,11 @@ public class AdminGui extends JFrame {
 		btnNewButton = new JButton("Clienti");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
+				try {
+					Controller.RiempiTabellaAdmin(tb, "select * from cliente_admin", "cliente_admin");
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnNewButton.setBounds(137, 4, 120, 23);
@@ -80,6 +85,11 @@ public class AdminGui extends JFrame {
 		JButton btnNewButton_6 = new JButton("Info Dipendenti");
 		btnNewButton_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					Controller.RiempiTabellaAdmin(tb, "select * from dipendente_introito", "dipendente_introito");
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnNewButton_6.setBounds(397, 4, 120, 23);
@@ -88,6 +98,11 @@ public class AdminGui extends JFrame {
 		JButton btnNewButton_7 = new JButton("Clienti Punti Categoria");
 		btnNewButton_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					Controller.RiempiTabellaAdmin(tb, "select * from punti", "punti");
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnNewButton_7.setBounds(267, 4, 120, 23);

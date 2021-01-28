@@ -52,29 +52,42 @@ public class Starter {
 	}
 	public void AccendiGui(){
 		Login= new LoginGui(this);
+		Login.setLocationRelativeTo(null);
 		Login.setVisible(true);
 	}
 	public void AccediRegister() {
 		Login.setVisible(false);
 		Register = new RegisterGui(this);
+		Register.setLocationRelativeTo(null);
 		Register.setVisible(true);
 	}
 	public void AccendiNegozioInfoCliente() 
 	{
 		Login.setVisible(false);
 		Negozio = new NegozioGui(this);
+		Negozio.setLocationRelativeTo(null);
 		Negozio.setVisible(true);
 		Negozio.getProfiloLabel().setText("Ciao "+this.IlCliente.getNome()+" il tuo Saldo è di "+this.IlCliente.getSaldo()+"€");
 	}
 	public void AccendiCarrello(){
 		Negozio.setVisible(false);
 		Carrello = new CarrelloGui(this);
+		Carrello.setLocationRelativeTo(null);
 		Carrello.setVisible(true);
 	}
 	public void AccendiAdmin() {
-		Login.setVisible(false);
-		Admin = new AdminGui(this);
-		Admin.setVisible(true);
+		
+		String input =JOptionPane.showInputDialog("Inserisci password per accendere");
+        if(input!= null && input.isEmpty()!=true ) 
+        {
+            if(input.equals("admin")) 
+            {
+				Login.setVisible(false);
+				Admin = new AdminGui(this);
+				Admin.setLocationRelativeTo(null);
+				Admin.setVisible(true);
+            }else JOptionPane.showMessageDialog(null, "Password Sbagliata");
+        }
 	}
 	public void SpegniCarrello() 
     {
@@ -143,6 +156,12 @@ public class Starter {
             Object o[] = {e.getNome(),e.getPrezzo(),e.getQuantita(),e.getIdProdotto()};
             x.addRow(o);
         }
+    }
+	public void RiempiTabellaAdmin(DefaultTableModel x,String table,String parziale) throws SQLException 
+    {
+        Object[] Colonne = this.DAO1.RiempiColonne(parziale);
+        Object[][] Dati = this.DAO1.RiempiDati(table, parziale);
+        x.setDataVector(Dati, Colonne);
     }
 	public void SpegniColonna(String Colonna,JTable t) 
 	{
