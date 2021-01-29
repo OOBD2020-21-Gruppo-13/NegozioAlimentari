@@ -111,6 +111,14 @@ public class AdminGui extends JFrame {
 		JButton btnNewButton_8 = new JButton("Info Dipendenti \r\nPeriodo");
 		btnNewButton_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try 
+				{
+					String query = Controller.ChiediData();
+					if(query!= null && query.isEmpty()!=true) 
+					Controller.RiempiTabellaAdmin(tb, query, "dipendente_introito");
+				} catch (SQLException e1) {
+					System.out.println(e1);
+				}
 			}
 		});	
 		btnNewButton_8.setBounds(527, 4, 120, 23);

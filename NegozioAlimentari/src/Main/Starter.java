@@ -310,6 +310,27 @@ public class Starter {
         this.getDAO2().CreaAcquisto(this.DAO2.RicavoIdAcquisto(),IlCliente.getIdTessera(), this.CalcoloCarrello(),random,this.CalcoloPuntiTotale(),this.IlCliente.getCarrello());
         this.IlCliente.getCarrello().removeAll(this.IlCliente.getCarrello());
     }
+    public String ChiediData() 
+	{
+		String pattern = "^((\\d{2}(([02468][048])|([13579][26]))[\\-\\/\\s]?((((0?[13578])|(1[02]))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])))))|(\\d{2}(([02468][1235679])|([13579][01345789]))[\\-\\/\\s]?((((0?[13578])|(1[02]))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\\-\\/\\s]?((0?[1-9])|(1[0-9])|(2[0-8]))))))(\\s(((0?[1-9])|(1[0-2]))\\:([0-5][0-9])((\\s)|(\\:([0-5][0-9])\\s))([AM|PM|am|pm]{2,2})))?$";
+		String Inizio = null;	 		
+		String Fine = null; 	 		
+		do {
+			Inizio = JOptionPane.showInputDialog(null, "Inserisci data iniziale (Formato yyyy-mm-dd)");
+			Fine = JOptionPane.showInputDialog(null, "Inserisci data finale (Formato yyyy-mm-dd)");
+			if(Inizio!= null && Inizio.isEmpty()!=true && Fine!= null && Fine.isEmpty()!=true) 
+			{
+				if (Inizio.matches(pattern) && Fine.matches(pattern)) {
+					if (Fine.compareTo(Inizio) >= 0) {
+						return "SELECT nome, cognome,SUM(introito)AS introito, COUNT(idacquisto)AS vendite FROM dipendente_periodo WHERE data_acquisto BETWEEN '"+Inizio+"'  AND '"+Fine+"' GROUP BY nome, cognome";
+					} else
+						JOptionPane.showMessageDialog(null, "Periodo non valido");
+				} else
+					JOptionPane.showMessageDialog(null, "Date non valide");
+			}else break;
+		} while (true);
+		return null;	
+	}
 	public DipendenteDAOPostgres getDAO1() {
 		return DAO1;
 	}
