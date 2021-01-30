@@ -52,9 +52,9 @@ public class RegisterGui extends JFrame {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if(Controller.RegisterButtonGui(NomeField.getText(), CognomeField.getText(), PasswordField.getText())) {
-						JOptionPane.showMessageDialog(null, "Ti è stata assegnata la tessera numero: "+ String.valueOf(Controller.getDAO2().RicavoId()-1) +" per accedere usa questo numero","Registrazione effettuata",JOptionPane.PLAIN_MESSAGE);
-					}else JOptionPane.showMessageDialog(null, "Dati Non Validi");
+					if(!Controller.RegisterButtonGui(NomeField.getText(), CognomeField.getText(), PasswordField.getText())) {
+						JOptionPane.showMessageDialog(null, "Dati Non Validi");	
+					}
 				} catch (SQLException e1) {	
 					e1.printStackTrace();
 				}		

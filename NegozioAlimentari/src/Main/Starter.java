@@ -134,6 +134,7 @@ public class Starter {
 	public boolean RegisterButtonGui(String Nome, String Cognome, String Password) throws SQLException {
 		if(Nome!= null && Nome.isEmpty()!=true && Cognome!= null && Cognome.isEmpty()!=true && Password!= null && Password.isEmpty()!=true) {
 			if(this.getDAO2().Register(Nome, Cognome, Password)) {
+				JOptionPane.showMessageDialog(null, "Ti è stata assegnata la tessera numero: "+ String.valueOf(DAO2.RicavoId()-1) +" per accedere usa questo numero","Registrazione effettuata",JOptionPane.PLAIN_MESSAGE);
 				Register.setVisible(false);
 				this.AccendiGui();
 				return true;
@@ -179,10 +180,28 @@ public class Starter {
 	}
 	public void InserisciProdottoCarrello(int id,int quantita) 
 	{
-		ClassiDB.Prodotto p = new ClassiDB.Prodotto (quantita,id,this.Magazzino.get(id-1).getPrezzo(),this.Magazzino.get(id-1).getNome());
-		this.IlCliente.getCarrello().add(p);
-		this.Magazzino.get(id-1).setQuantita(this.Magazzino.get(id-1).getQuantita()-quantita);
+		Prodotto p = new Prodotto (quantita,id,this.Magazzino.get(id-1).getPrezzo(),this.Magazzino.get(id-1).getNome());
+        if(UnisciQuantitaProdotto(quantita, this.Magazzino.get(id-1).getIdProdotto())==false) {
+            this.IlCliente.getCarrello().add(p);}
+        this.Magazzino.get(id-1).setQuantita(this.Magazzino.get(id-1).getQuantita()-quantita);
 	}
+	public boolean UnisciQuantitaProdotto(int quantita,int idprodotto) 
+    {
+        if((this.IlCliente.getCarrello().isEmpty())!=true) 
+        {
+            Iterator<Prodotto> i = this.IlCliente.getCarrello().iterator();
+            while(i.hasNext())
+            {
+                Prodotto temp = i.next();
+                if(idprodotto == temp.getIdProdotto()) 
+                {
+                    temp.setQuantita(temp.getQuantita()+quantita);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 	public void SorterColonna(String Tipo,int index,JTable table,TableRowSorter<DefaultTableModel> sorter) 
 	{
 		table.setRowSorter(sorter);
@@ -303,7 +322,7 @@ public class Starter {
     }
     public Double CalcoloPuntiTotale() 
     {
-        return Round((CalcoloCarrello()*10/100));
+        return Round((CalcoloCarrello()*10)/100);
     }
     public void CreazioneDBAcquisto(int random) throws SQLException 
     {
