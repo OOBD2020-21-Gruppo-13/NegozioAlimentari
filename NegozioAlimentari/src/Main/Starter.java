@@ -1,12 +1,15 @@
 package Main;
-import java.sql.*;
-import java.util.*;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-
 import ClassiDB.Cliente;
 import ClassiDB.Dipendente;
 import ClassiDB.Prodotto;
@@ -20,19 +23,19 @@ import Gui.RegisterGui;
 
 public class Starter {
 
-	DBConnection dbconn = null;
-    Connection connection = null;
-    LoginGui Login;
-    RegisterGui Register;
-    NegozioGui Negozio;
-    CarrelloGui Carrello;
-    AdminGui Admin;
-    DipendenteDAOPostgres DAO1;
-    ClienteDAOPostgres DAO2;
-    ProdottoDAOPostgres DAO3;
-    List<Prodotto> Magazzino;
-    Cliente IlCliente;
-    Dipendente IlDipendente;
+	private DBConnection dbconn = null;
+	private Connection connection = null;
+	private LoginGui Login;
+	private RegisterGui Register;
+	private NegozioGui Negozio;
+	private CarrelloGui Carrello;
+	private AdminGui Admin;
+	private DipendenteDAOPostgres DAO1;
+	private ClienteDAOPostgres DAO2;
+	private ProdottoDAOPostgres DAO3;
+	private List<Prodotto> Magazzino;
+	private Cliente IlCliente;
+	private Dipendente IlDipendente;
    
 	public Starter() throws SQLException 
 	{
@@ -42,13 +45,10 @@ public class Starter {
 	    DAO2 = new ClienteDAOPostgres(connection, this);
 	    DAO3 = new ProdottoDAOPostgres(connection, this);
         AccendiGui();
-        
-        System.out.println(DAO1.RiempiDati("select * from cliente_admin", "cliente_admin").length);
-        System.out.println(DAO1.RiempiColonne("cliente_admin").length);
 	}
 	public static void main(String[] args) throws SQLException 
 	{
-		Starter s = new Starter();		
+		new Starter();		
 	}
 	public void AccendiGui(){
 		Login= new LoginGui(this);
@@ -67,7 +67,7 @@ public class Starter {
 		Negozio = new NegozioGui(this);
 		Negozio.setLocationRelativeTo(null);
 		Negozio.setVisible(true);
-		Negozio.getProfiloLabel().setText("Ciao "+this.IlCliente.getNome()+" il tuo Saldo è di "+this.IlCliente.getSaldo()+"€");
+		Negozio.getProfiloLabel().setText("Ciao "+IlCliente.getNome()+" il tuo Saldo è di "+IlCliente.getSaldo()+"€");
 	}
 	public void AccendiCarrello(){
 		Negozio.setVisible(false);
@@ -104,22 +104,22 @@ public class Starter {
 		return Math.round(x * 100.0) / 100.0;
 	}
 	public void LogOutNegozio() {
-		this.IlCliente.getCarrello().removeAll(this.IlCliente.getCarrello());
+		IlCliente.getCarrello().removeAll(IlCliente.getCarrello());
 		Negozio.setVisible(false);
 		Login.setVisible(true);
 	}
 	public void Reboot() {
-		this.IlCliente.getCarrello().removeAll(this.IlCliente.getCarrello());
+		IlCliente.getCarrello().removeAll(IlCliente.getCarrello());
 		Carrello.setVisible(false);
 		Login.setVisible(true);
 	}
 	public boolean LoginButtonGui(String Username, String Password) {
 		if(Username!= null && Username.isEmpty()!=true && Password!= null && Password.isEmpty()!=true) {
 			try {
-				if(this.getDAO2().Login(Integer.parseInt(Username), Password) > 0) {
-					this.Magazzino = this.getDAO3().CopiaDB();
-					this.IlCliente = this.getDAO2().CopiaDB(Integer.parseInt(Username));
-					this.AccendiNegozioInfoCliente();
+				if(DAO2.Login(Integer.parseInt(Username), Password) > 0) {
+					Magazzino = DAO3.CopiaDB();
+					IlCliente = DAO2.CopiaDB(Integer.parseInt(Username));
+					AccendiNegozioInfoCliente();
 					return true;
 				}
 			} catch (NumberFormatException nfe) {
@@ -133,10 +133,10 @@ public class Starter {
 	}
 	public boolean RegisterButtonGui(String Nome, String Cognome, String Password) throws SQLException {
 		if(Nome!= null && Nome.isEmpty()!=true && Cognome!= null && Cognome.isEmpty()!=true && Password!= null && Password.isEmpty()!=true) {
-			if(this.getDAO2().Register(Nome, Cognome, Password)) {
+			if(DAO2.Register(Nome, Cognome, Password)) {
 				JOptionPane.showMessageDialog(null, "Ti è stata assegnata la tessera numero: "+ String.valueOf(DAO2.RicavoId()-1) +" per accedere usa questo numero","Registrazione effettuata",JOptionPane.PLAIN_MESSAGE);
 				Register.setVisible(false);
-				this.AccendiGui();
+				AccendiGui();
 				return true;
 			}else return false;		
 		}
@@ -144,7 +144,7 @@ public class Starter {
 	}
 	public void RiempiTabellaNegozio(DefaultTableModel x) 
 	{
-		for(ClassiDB.Prodotto e : this.Magazzino) 
+		for(ClassiDB.Prodotto e : Magazzino) 
 		{
 			Object o[] = {e.getNome(),e.getPrezzo(),e.getQuantita(),e.getDataProdRacc(),e.getDataScadenza(),e.getDataMungitura(),e.getTipo(),e.getIdProdotto()};
 			x.addRow(o);
@@ -152,7 +152,7 @@ public class Starter {
 	}
 	public void RiempiTabellaCarrello(DefaultTableModel x) 
     {
-        for(ClassiDB.Prodotto e : this.IlCliente.getCarrello()) 
+        for(ClassiDB.Prodotto e : IlCliente.getCarrello()) 
         {
             Object o[] = {e.getNome(),e.getPrezzo(),e.getQuantita(),e.getIdProdotto()};
             x.addRow(o);
@@ -160,8 +160,8 @@ public class Starter {
     }
 	public void RiempiTabellaAdmin(DefaultTableModel x,String table,String parziale) throws SQLException 
     {
-        Object[] Colonne = this.DAO1.RiempiColonne(parziale);
-        Object[][] Dati = this.DAO1.RiempiDati(table, parziale);
+        Object[] Colonne = DAO1.RiempiColonne(parziale);
+        Object[][] Dati = DAO1.RiempiDati(table, parziale);
         x.setDataVector(Dati, Colonne);
     }
 	public void SpegniColonna(String Colonna,JTable t) 
@@ -180,16 +180,17 @@ public class Starter {
 	}
 	public void InserisciProdottoCarrello(int id,int quantita) 
 	{
-		Prodotto p = new Prodotto (quantita,id,this.Magazzino.get(id-1).getPrezzo(),this.Magazzino.get(id-1).getNome());
-        if(UnisciQuantitaProdotto(quantita, this.Magazzino.get(id-1).getIdProdotto())==false) {
-            this.IlCliente.getCarrello().add(p);}
-        this.Magazzino.get(id-1).setQuantita(this.Magazzino.get(id-1).getQuantita()-quantita);
+		Prodotto p = new Prodotto (quantita,id,Magazzino.get(id-1).getPrezzo(),Magazzino.get(id-1).getNome());
+        if(UnisciQuantitaProdotto(quantita, Magazzino.get(id-1).getIdProdotto())==false) {
+            IlCliente.getCarrello().add(p);
+        }
+        Magazzino.get(id-1).setQuantita(Magazzino.get(id-1).getQuantita()-quantita);
 	}
 	public boolean UnisciQuantitaProdotto(int quantita,int idprodotto) 
     {
-        if((this.IlCliente.getCarrello().isEmpty())!=true) 
+        if((IlCliente.getCarrello().isEmpty())!=true) 
         {
-            Iterator<Prodotto> i = this.IlCliente.getCarrello().iterator();
+            Iterator<Prodotto> i = IlCliente.getCarrello().iterator();
             while(i.hasNext())
             {
                 Prodotto temp = i.next();
@@ -211,7 +212,7 @@ public class Starter {
     {
         int index = table.getSelectedRow();
         int id = (int) table.getValueAt(index, 7);
-        int decisone = JOptionPane.showConfirmDialog(null,"Vuoi aggiungere "+this.Magazzino.get(id-1).getNome()+" al carrello?","Aggiungi carrello",JOptionPane.YES_NO_OPTION);
+        int decisone = JOptionPane.showConfirmDialog(null,"Vuoi aggiungere "+Magazzino.get(id-1).getNome()+" al carrello?","Aggiungi carrello",JOptionPane.YES_NO_OPTION);
         if(decisone == 0) 
         {
             int quantita = ChiediQuantita(id);
@@ -237,7 +238,7 @@ public class Starter {
                 if(quantita<=0) 
                 {
                     JOptionPane.showMessageDialog(null, "Hai inserito una quantita non valida");
-                }else if(quantita<=this.Magazzino.get(id-1).getQuantita()) {
+                }else if(quantita<=Magazzino.get(id-1).getQuantita()) {
                     return quantita;
                 }else {
                     JOptionPane.showMessageDialog(null, "Hai inserito una quantita non valida");
@@ -262,7 +263,6 @@ public class Starter {
 		int quantita=0;
 			do {
 				String temp = JOptionPane.showInputDialog(null,"Inserisci quantita da eliminare");
-				System.out.println(temp);
 				if(temp!= null && temp.isEmpty()!=true) 
 				{
 					try {
@@ -271,17 +271,17 @@ public class Starter {
 						JOptionPane.showMessageDialog(null, "Hai inserito dei valori sbagliati");
 						break;
 					}
-					if(quantita<=this.IlCliente.getCarrello().get(id).getQuantita()) 
+					if(quantita<=IlCliente.getCarrello().get(id).getQuantita()) 
 					{
 						int idprodotto = (int) x.getValueAt(id, 3);
-						this.Magazzino.get(idprodotto-1).setQuantita(this.Magazzino.get(idprodotto-1).getQuantita()+quantita);
-						this.IlCliente.getCarrello().get(id).setQuantita(this.IlCliente.getCarrello().get(id).getQuantita()-quantita);
-						if(this.IlCliente.getCarrello().get(id).getQuantita()==0) 
+						Magazzino.get(idprodotto-1).setQuantita(Magazzino.get(idprodotto-1).getQuantita()+quantita);
+						IlCliente.getCarrello().get(id).setQuantita(IlCliente.getCarrello().get(id).getQuantita()-quantita);
+						if(IlCliente.getCarrello().get(id).getQuantita()==0) 
 						{
-							this.IlCliente.getCarrello().remove(id);
+							IlCliente.getCarrello().remove(id);
 						}
-						this.RemoveTable(x);
-						this.RiempiTabellaCarrello(x);
+						RemoveTable(x);
+						RiempiTabellaCarrello(x);
 						break;
 					}else {
 							JOptionPane.showMessageDialog(null, "Hai inserito una quantita non valida");
@@ -292,7 +292,7 @@ public class Starter {
     public double CalcoloCarrello() 
 	{
 	 double x=0;
-		for(ClassiDB.Prodotto p:this.IlCliente.getCarrello()) 
+		for(ClassiDB.Prodotto p: IlCliente.getCarrello()) 
 		{
 			x = x+ ((p.getPrezzo())*(p.getQuantita()));
 		}
@@ -300,19 +300,19 @@ public class Starter {
 	}
     public void PagaButton() 
     {
-        if(this.IlCliente.getCarrello().isEmpty()!=true) 
+        if(IlCliente.getCarrello().isEmpty()!=true) 
         {
             try {
-                int decisione = JOptionPane.showConfirmDialog(null,"Il tuo saldo è: "+this.IlCliente.getSaldo()+"€ a fronte di: " +this.CalcoloCarrello()+"€","Vuoi pagare?",JOptionPane.YES_NO_OPTION);
+                int decisione = JOptionPane.showConfirmDialog(null,"Il tuo saldo è: "+IlCliente.getSaldo()+"€ a fronte di: " +CalcoloCarrello()+"€","Vuoi pagare?",JOptionPane.YES_NO_OPTION);
                 if(decisione == 0) 
                 {
-                    if(this.IlCliente.getSaldo()>=this.CalcoloCarrello()) 
+                    if(IlCliente.getSaldo()>=CalcoloCarrello()) 
                     {
-                    int random= this.Random(this.DAO1.NumeroDipendente());
-                    this.IlDipendente = this.DAO1.CopiaDB(random);
-                    this.CreazioneDBAcquisto(random);
-                    JOptionPane.showMessageDialog(null, "Pagamento avvenuto con successo\nIl tuo ordine è stato portato a termine da: "+this.IlDipendente.getNome()+" "+this.IlDipendente.getCognome()+"\nArriverderci e torna a trovarci!");
-                    this.Reboot();
+	                    int random= Random(DAO1.NumeroDipendente());
+	                    IlDipendente = DAO1.CopiaDB(random);
+	                    CreazioneDBAcquisto(random);
+	                    JOptionPane.showMessageDialog(null, "Pagamento avvenuto con successo\nIl tuo ordine è stato portato a termine da: "+IlDipendente.getNome()+" "+IlDipendente.getCognome()+"\nArriverderci e torna a trovarci!");
+	                    Reboot();
                     }else JOptionPane.showMessageDialog(null, "Non hai abbastanza soldi, rimuovi qualche prodotto dal carrello");
                 }
             } catch (SQLException e1) {
@@ -326,8 +326,8 @@ public class Starter {
     }
     public void CreazioneDBAcquisto(int random) throws SQLException 
     {
-        this.getDAO2().CreaAcquisto(this.DAO2.RicavoIdAcquisto(),IlCliente.getIdTessera(), this.CalcoloCarrello(),random,this.CalcoloPuntiTotale(),this.IlCliente.getCarrello());
-        this.IlCliente.getCarrello().removeAll(this.IlCliente.getCarrello());
+        DAO2.CreaAcquisto(DAO2.RicavoIdAcquisto(),IlCliente.getIdTessera(), CalcoloCarrello(),random,CalcoloPuntiTotale(),IlCliente.getCarrello());
+        IlCliente.getCarrello().removeAll(IlCliente.getCarrello());
     }
     public String ChiediData() 
 	{
@@ -349,30 +349,5 @@ public class Starter {
 			}else break;
 		} while (true);
 		return null;	
-	}
-	public DipendenteDAOPostgres getDAO1() {
-		return DAO1;
-	}
-	public ClienteDAOPostgres getDAO2() {
-		return DAO2;
-	}
-	public ProdottoDAOPostgres getDAO3() {
-		return DAO3;
-	}
-	public LoginGui getLogin() {
-		return Login;
-	}
-	public void setLogin(LoginGui login) {
-		Login = login;
-	}
-	public RegisterGui getRegister() {
-		return Register;
-	}
-	public void setRegister(RegisterGui register) {
-		Register = register;
-	}
-	public void PrintaCarrelloDebug() 
-	{
-		System.out.println(this.IlCliente.getCarrello());
 	}
 }

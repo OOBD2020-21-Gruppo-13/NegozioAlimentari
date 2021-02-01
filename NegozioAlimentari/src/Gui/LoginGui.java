@@ -1,31 +1,26 @@
 package Gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import Main.Starter;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class LoginGui extends JFrame {
 
 	private JPanel contentPane;
-	Starter Controller;
+	private Starter Controller;
 	private JTextField UsernameField;
 	private JPasswordField PasswordField;
 
@@ -50,6 +45,7 @@ public class LoginGui extends JFrame {
 		
 		JButton AccediButton = new JButton("Accedi");
 		AccediButton.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e){
 				if(Controller.LoginButtonGui(UsernameField.getText(),PasswordField.getText())) {
 					UsernameField.setText(null);

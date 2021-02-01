@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -14,13 +15,12 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
-
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 @SuppressWarnings("serial")
 public class AdminGui extends JFrame {
@@ -63,8 +63,15 @@ public class AdminGui extends JFrame {
 		table.getTableHeader().setReorderingAllowed(false);
 		table.getTableHeader().setResizingAllowed(false);
 		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(tb);
+		table.setRowSorter(sorter);
 		scrollPane.setViewportView(table);
 		textField = new JTextField();
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				sorter.setRowFilter(RowFilter.regexFilter(textField.getText()));
+			}
+		});
 		textField.setBounds(702, 4, 86, 23);
 		contentPane.add(textField);
 		textField.setColumns(10);
@@ -75,7 +82,7 @@ public class AdminGui extends JFrame {
 				try {
 					Controller.RiempiTabellaAdmin(tb, "select * from cliente_admin", "cliente_admin");
 				} catch (SQLException e1) {
-					e1.printStackTrace();
+					System.out.println(e1);
 				}
 			}
 		});
@@ -88,7 +95,7 @@ public class AdminGui extends JFrame {
 				try {
 					Controller.RiempiTabellaAdmin(tb, "select * from dipendente_introito", "dipendente_introito");
 				} catch (SQLException e1) {
-					e1.printStackTrace();
+					System.out.println(e1);
 				}
 			}
 		});
@@ -101,7 +108,7 @@ public class AdminGui extends JFrame {
 				try {
 					Controller.RiempiTabellaAdmin(tb, "select * from punti", "punti");
 				} catch (SQLException e1) {
-					e1.printStackTrace();
+					System.out.println(e1);
 				}
 			}
 		});

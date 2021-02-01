@@ -1,5 +1,5 @@
 package ClassiDB;
-import java.util.*;
+
 import java.sql.Date;
 
 public class Prodotto {
@@ -11,9 +11,6 @@ public class Prodotto {
 	 private Date DataProdRacc;
 	 private Date DataMungitura;
 
-	
-	
-	 
 	public Prodotto(int quantita, int idProdotto, double prezzo) {
 		super();
 		Quantita = quantita;
@@ -21,8 +18,6 @@ public class Prodotto {
 		this.Prezzo= prezzo;
 	}
 
-	
-	
 	public Prodotto(String nome, String tipo, Double prezzo, int quantita, int idProdotto, Date dataScadenza,Date DataProdracc) {
 		super();
 		Nome = nome;
@@ -42,8 +37,6 @@ public class Prodotto {
 		this.Prezzo= prezzo;
 		this.Nome=Nome;
 	 }
-
-
 
 	public String getNome() {
 		return Nome;
@@ -81,27 +74,18 @@ public class Prodotto {
 	public void setDataScadenza(Date dataScadenza) {
 		DataScadenza = dataScadenza;
 	}
-	
 	public Date getDataProdRacc() {
 		return DataProdRacc;
 	}
-
 	public void setDataProdRacc(Date dataProdRacc) {
 		DataProdRacc = dataProdRacc;
 	}
-
 	public void setQuantita(Integer quantita) {
 		Quantita = quantita;
 	}
-
-
-
 	public void setIdProdotto(Integer idProdotto) {
 		IdProdotto = idProdotto;
 	}
-
-
-
 	public Date getDataMungitura() {
 		return DataMungitura;
 	}
@@ -109,16 +93,4 @@ public class Prodotto {
 		DataMungitura = dataMungitura;
 	}
 
-
-
-	@Override
-	public String toString() {
-		return "Prodotto [Nome=" + Nome + ", Tipo=" + Tipo + ", Prezzo=" + Prezzo + ", Quantita=" + Quantita
-				+ ", IdProdotto=" + IdProdotto + ", DataScadenza=" + DataScadenza + ", DataProdRacc=" + DataProdRacc
-				+ ", DataMungitura=" + DataMungitura + "]";
-	}
-
-	
-	
-	
 }

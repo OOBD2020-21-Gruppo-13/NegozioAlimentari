@@ -1,14 +1,10 @@
 package Gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-
 import Main.Starter;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -21,15 +17,15 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+@SuppressWarnings("serial")
 public class NegozioGui extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel ProfiloLabel;
-	Starter Controller;
+	private Starter Controller;
 	private JTable table;
 	private DefaultTableModel tb;
 	private TableRowSorter<DefaultTableModel> sorter = null;
-	
 	
 	public NegozioGui(Starter Temp) {
 		Controller = Temp;
@@ -114,7 +110,6 @@ public class NegozioGui extends JFrame {
 		ButtonCarrello.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Controller.AccendiCarrello();
-				Controller.PrintaCarrelloDebug();
 			}
 		});
 		ButtonCarrello.setBounds(884, 11, 89, 23);
@@ -127,7 +122,7 @@ public class NegozioGui extends JFrame {
 		tb = new DefaultTableModel() 
         {
             @Override
-            public Class getColumnClass(int column) 
+            public Class<Integer> getColumnClass(int column) 
             {
                 return Integer.class;
             }

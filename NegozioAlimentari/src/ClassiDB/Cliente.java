@@ -16,75 +16,39 @@ public class Cliente {
 		this.saldo = saldo;
 		PuntiFedelta = puntiFedelta;
 	}
-	
-	
 	public String getNome() {
 		return Nome;
 	}
-
-
-
 	public void setNome(String nome) {
 		Nome = nome;
 	}
-
-
-
 	public String getCognome() {
 		return Cognome;
 	}
-
-
-
 	public void setCognome(String cognome) {
 		Cognome = cognome;
 	}
-
-
-
 	public int getIdTessera() {
 		return IdTessera;
 	}
-
-
-
 	public void setIdTessera(int idTessera) {
 		IdTessera = idTessera;
 	}
-
-
-
 	public double getPuntiFedelta() {
 		return PuntiFedelta;
 	}
-
-
-
 	public void setPuntiFedelta(double puntiFedelta) {
 		PuntiFedelta = puntiFedelta;
 	}
-	
 	public double getSaldo() {
 		return saldo;
 	}
-
 	public void setSaldo(double saldo) {
 		this.saldo = saldo;
 	}
-
-
-	@Override
-	public String toString() {
-		return "Cliente [Nome=" + Nome + ", Cognome=" + Cognome + ", IdTessera=" + IdTessera + ", saldo=" + saldo
-				+ ", PuntiFedelta=" + PuntiFedelta + "]";
-	}
-
-
 	public ArrayList<Prodotto> getCarrello() {
 		return Carrello;
 	}
-
-
 	public void setCarrello(ArrayList<Prodotto> carrello) {
 		Carrello = carrello;
 	}

@@ -1,21 +1,14 @@
 package Gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.HeadlessException;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import Main.Starter;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
-import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -23,14 +16,14 @@ import java.sql.SQLException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class RegisterGui extends JFrame {
 
 	private JPanel contentPane;
-	Starter Controller;
+	private Starter Controller;
 	private JTextField NomeField;
 	private JTextField CognomeField;
 	private JPasswordField PasswordField;
-
 
 	public RegisterGui(Starter temp){
 		Controller = temp;
@@ -56,7 +49,7 @@ public class RegisterGui extends JFrame {
 						JOptionPane.showMessageDialog(null, "Dati Non Validi");	
 					}
 				} catch (SQLException e1) {	
-					e1.printStackTrace();
+					System.out.println(e1);
 				}		
 			}
 		});
