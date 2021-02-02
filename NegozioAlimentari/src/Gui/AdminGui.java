@@ -33,6 +33,7 @@ public class AdminGui extends JFrame {
 	Starter Controller = null;
 
 	public AdminGui(Starter temp) {
+		setResizable(false);
 		Controller = temp;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 814, 490);
@@ -69,7 +70,7 @@ public class AdminGui extends JFrame {
 		textField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				sorter.setRowFilter(RowFilter.regexFilter(textField.getText()));
+				sorter.setRowFilter(RowFilter.regexFilter("(?i)"+textField.getText()));
 			}
 		});
 		textField.setBounds(702, 4, 86, 23);
@@ -86,7 +87,7 @@ public class AdminGui extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setBounds(137, 4, 120, 23);
+		btnNewButton.setBounds(105, 4, 70, 23);
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_6 = new JButton("Info Dipendenti");
@@ -99,10 +100,11 @@ public class AdminGui extends JFrame {
 				}
 			}
 		});
-		btnNewButton_6.setBounds(397, 4, 120, 23);
+		btnNewButton_6.setBounds(349, 4, 120, 23);
 		contentPane.add(btnNewButton_6);
 		
 		JButton btnNewButton_7 = new JButton("Clienti Punti Categoria");
+		btnNewButton_7.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnNewButton_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -112,7 +114,7 @@ public class AdminGui extends JFrame {
 				}
 			}
 		});
-		btnNewButton_7.setBounds(267, 4, 120, 23);
+		btnNewButton_7.setBounds(185, 4, 154, 23);
 		contentPane.add(btnNewButton_7);
 		
 		JButton btnNewButton_8 = new JButton("Info Dipendenti \r\nPeriodo");
@@ -128,7 +130,7 @@ public class AdminGui extends JFrame {
 				}
 			}
 		});	
-		btnNewButton_8.setBounds(527, 4, 120, 23);
+		btnNewButton_8.setBounds(479, 4, 168, 23);
 		contentPane.add(btnNewButton_8);
 		JLabel lblNewLabel = new JLabel("Cerca");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));

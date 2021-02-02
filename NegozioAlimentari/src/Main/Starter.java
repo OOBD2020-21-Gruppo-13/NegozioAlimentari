@@ -10,6 +10,8 @@ import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+
+import ClassiDB.Acquisto;
 import ClassiDB.Cliente;
 import ClassiDB.Dipendente;
 import ClassiDB.Prodotto;
@@ -33,9 +35,11 @@ public class Starter {
 	private DipendenteDAOPostgres DAO1;
 	private ClienteDAOPostgres DAO2;
 	private ProdottoDAOPostgres DAO3;
+	private AcquistiDAOPostgres DAO4;
 	private List<Prodotto> Magazzino;
 	private Cliente IlCliente;
 	private Dipendente IlDipendente;
+	private Acquisto acquisto; 
    
 	public Starter() throws SQLException 
 	{
@@ -44,6 +48,7 @@ public class Starter {
         DAO1 = new DipendenteDAOPostgres(connection, this);
 	    DAO2 = new ClienteDAOPostgres(connection, this);
 	    DAO3 = new ProdottoDAOPostgres(connection, this);
+	    DAO4 = new AcquistiDAOPostgres(connection, this);
         AccendiGui();
 	}
 	public static void main(String[] args) throws SQLException 
@@ -306,11 +311,11 @@ public class Starter {
                 int decisione = JOptionPane.showConfirmDialog(null,"Il tuo saldo è: "+IlCliente.getSaldo()+"€ a fronte di: " +CalcoloCarrello()+"€","Vuoi pagare?",JOptionPane.YES_NO_OPTION);
                 if(decisione == 0) 
                 {
-                    if(IlCliente.getSaldo()>=CalcoloCarrello()) 
+                	Double Prezzo = CalcoloCarrello();
+                    if(IlCliente.getSaldo()>=Prezzo) 
                     {
-	                    int random= Random(DAO1.NumeroDipendente());
-	                    IlDipendente = DAO1.CopiaDB(random);
-	                    CreazioneDBAcquisto(random);
+	                    IlDipendente = DAO1.CopiaDB(Random(DAO1.NumeroDipendente()));
+	                    CreazioneDBAcquisto(Prezzo);
 	                    JOptionPane.showMessageDialog(null, "Pagamento avvenuto con successo\nIl tuo ordine è stato portato a termine da: "+IlDipendente.getNome()+" "+IlDipendente.getCognome()+"\nArriverderci e torna a trovarci!");
 	                    Reboot();
                     }else JOptionPane.showMessageDialog(null, "Non hai abbastanza soldi, rimuovi qualche prodotto dal carrello");
@@ -324,9 +329,10 @@ public class Starter {
     {
         return Round((CalcoloCarrello()*10)/100);
     }
-    public void CreazioneDBAcquisto(int random) throws SQLException 
+    public void CreazioneDBAcquisto(Double prezzo) throws SQLException 
     {
-        DAO2.CreaAcquisto(DAO2.RicavoIdAcquisto(),IlCliente.getIdTessera(), CalcoloCarrello(),random,CalcoloPuntiTotale(),IlCliente.getCarrello());
+    	acquisto = new Acquisto(IlCliente.getCarrello(), IlCliente, IlDipendente, DAO4.RicavoIdAcquisto(), prezzo, CalcoloPuntiTotale());
+        DAO4.SalvaAcquisto(acquisto);
         IlCliente.getCarrello().removeAll(IlCliente.getCarrello());
     }
     public String ChiediData() 

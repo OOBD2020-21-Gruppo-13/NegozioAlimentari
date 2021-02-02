@@ -13,9 +13,7 @@ public class DBConnection {
         try
         {
             Class.forName("org.postgresql.Driver");
-            System.out.println("Driver caricato corretamente");
             connection = DriverManager.getConnection("jdbc:postgresql://kandula.db.elephantsql.com/zytyplng?user=zytyplng&password=ZEO-23R6FOcUUp44Lyoj0VizFHMFERl0");
-            System.out.println("Collegamento al database eseguito corretamente");
         }
         catch(ClassNotFoundException e)
         {

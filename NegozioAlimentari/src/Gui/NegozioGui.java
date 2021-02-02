@@ -28,6 +28,7 @@ public class NegozioGui extends JFrame {
 	private TableRowSorter<DefaultTableModel> sorter = null;
 	
 	public NegozioGui(Starter Temp) {
+		setResizable(false);
 		Controller = Temp;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1110, 600);

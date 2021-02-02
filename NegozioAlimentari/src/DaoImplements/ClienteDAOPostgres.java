@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import ClassiDB.Cliente;
 import Dao.ClienteDAO;
 import Main.Starter;
@@ -76,48 +75,10 @@ public int Login(int Username,String Password) throws SQLException
 	ResultSet rs = st.executeQuery();
 	if(rs.next()) 
 	{
-		System.out.println("Sei loggato con successo");
 		return Username;
 	}else return 0;
 }
 
-@Override
-public int RicavoIdAcquisto() throws SQLException 
-{
-    Statement st = con.createStatement();
-    ResultSet rs = st.executeQuery("SELECT idacquisto FROM acquisto ORDER BY idacquisto DESC LIMIT 1");
-    if(rs.next()) {
-        return (rs.getInt("idacquisto")+1);
-    }else 
-    {
-        return 1;
-    }
-}
 
-@Override
-public void CreaAcquisto(int IdAcquisto,int IdCliente,Double PrezzoTotale,int IdDipendente,double PuntiTotale,ArrayList<ClassiDB.Prodotto> Carrello) throws SQLException 
-{
-    PreparedStatement st = con.prepareStatement("INSERT INTO acquisto VALUES (?,?,?,?,?,?)");
-    st.setInt(1, IdAcquisto);
-    st.setInt(2, IdCliente);
-    st.setDouble(3, PrezzoTotale);
-    st.setInt(4, IdDipendente);
-    st.setDouble(5, PuntiTotale);
-    st.setDate(6, new java.sql.Date(System.currentTimeMillis()));
-    st.executeUpdate();
-    st.close();
-
-    PreparedStatement st1 = con.prepareStatement("INSERT INTO dettagli_acquisto VALUES (?,?,?,?,?)");
-    for(ClassiDB.Prodotto p : Carrello) 
-    {
-        st1.setInt(1, IdAcquisto);
-        st1.setInt(2, p.getIdProdotto());
-        st1.setInt(3, p.getQuantita());
-        st1.setDouble(4, p.getPrezzo());
-        st1.setDouble(5, (Controller.Round(p.getPrezzo()*p.getQuantita()/10)));
-        st1.executeUpdate(); 
-    }
-    st1.close();
-}
 
 }
