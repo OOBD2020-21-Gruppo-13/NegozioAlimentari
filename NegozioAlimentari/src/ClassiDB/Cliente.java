@@ -1,21 +1,22 @@
 package ClassiDB;
-import java.util.*;
+import java.util.ArrayList;
 
 public class Cliente {
 
 	private String Nome,Cognome;
 	private int IdTessera;
-	private double saldo;
+	private double Saldo;
 	private double PuntiFedelta;
 	private ArrayList<Prodotto> Carrello = new ArrayList<Prodotto>();
-	public Cliente(String nome, String cognome, int idTessera, double saldo, double puntiFedelta) {
-		super();
-		Nome = nome;
-		Cognome = cognome;
-		IdTessera = idTessera;
-		this.saldo = saldo;
-		PuntiFedelta = puntiFedelta;
+	
+	public Cliente(String Nome, String Cognome, int IdTessera, double Saldo, double PuntiFedelta) {
+		this.Nome = Nome;
+		this.Cognome = Cognome;
+		this.IdTessera = IdTessera;
+		this.Saldo = Saldo;
+		this.PuntiFedelta = PuntiFedelta;
 	}
+	
 	public String getNome() {
 		return Nome;
 	}
@@ -41,10 +42,10 @@ public class Cliente {
 		PuntiFedelta = puntiFedelta;
 	}
 	public double getSaldo() {
-		return saldo;
+		return Saldo;
 	}
 	public void setSaldo(double saldo) {
-		this.saldo = saldo;
+		this.Saldo = saldo;
 	}
 	public ArrayList<Prodotto> getCarrello() {
 		return Carrello;

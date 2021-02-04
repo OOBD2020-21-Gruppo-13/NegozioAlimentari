@@ -3,12 +3,12 @@ package ClassiDB;
 public class Dipendente {
 
 	private String Nome,Cognome;
-	private int id;
+	private int Id;
 	
-	public Dipendente(String nome, String cognome, int id) {
-		Nome = nome;
-		Cognome = cognome;
-		this.id = id;
+	public Dipendente(String Nome, String Cognome, int Id) {
+		this.Nome = Nome;
+		this.Cognome = Cognome;
+		this.Id = Id;
 	}
 
 	public String getNome() {
@@ -24,9 +24,9 @@ public class Dipendente {
 		Cognome = cognome;
 	}
 	public int getId() {
-		return id;
+		return Id;
 	}
 	public void setId(int id) {
-		this.id = id;
+		this.Id = id;
 	}
 }

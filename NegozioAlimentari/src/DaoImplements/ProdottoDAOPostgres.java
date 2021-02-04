@@ -13,39 +13,47 @@ import Main.Starter;
 
 public class ProdottoDAOPostgres implements ProdottoDAO{
 
-	Connection con=null;
-	Starter Controller= null;
+	private Connection Con=null;
+	private Starter Controller= null;
 	
-public ProdottoDAOPostgres(Connection connection, Starter temp) { 
-	this.con=connection;
-	this.Controller=temp;
-   	
-  }
+	public ProdottoDAOPostgres(Connection connection, Starter temp) 
+	{ 
+		this.Con=connection;
+		this.Controller=temp;
+	}
+	
+	@Override
+	public List<Prodotto> CopiaDB() throws SQLException
+	{										
+	    PreparedStatement st = Con.prepareStatement("SELECT * FROM prodotto ORDER BY idprodotto");
+	    ResultSet rs = st.executeQuery();
+	    ArrayList<Prodotto> Magazzino = new ArrayList<Prodotto>();
+	    while(rs.next())
+	    {
+	    	String tipo = rs.getString("Tipo");
+	    	Prodotto p = new Prodotto(rs.getString("nome"),tipo,rs.getDouble("prezzo"),rs.getInt("quantitamag"),rs.getInt("idprodotto"),rs.getDate("datascadenza"),rs.getDate("dataprodracc"));
+	    	switch(tipo) 
+	    	{
+				case "Farinaceo","Confezionato","Uova","Frutta","Verdura":
+					Magazzino.add(p);
+					break;
+				case "Latticino":
+					p.setDataMungitura(rs.getDate("datamungitura"));
+					Magazzino.add(p);
+					break;
+	    	}	
+	    }
+	    rs.close();
+	    st.close();
+	    return Magazzino;
+	    }
 
-@Override
-public List<Prodotto> CopiaDB() throws SQLException
-{										
-    PreparedStatement st = con.prepareStatement("SELECT * FROM prodotto ORDER BY idprodotto");
-    ResultSet rs = st.executeQuery();
-    ArrayList<Prodotto> Magazzino = new ArrayList<Prodotto>();
-    while(rs.next())
-    {
-    	String tipo = rs.getString("Tipo");
-    	Prodotto p = new Prodotto(rs.getString("nome"),tipo,rs.getDouble("prezzo"),rs.getInt("quantitamag"),rs.getInt("idprodotto"),rs.getDate("datascadenza"),rs.getDate("dataprodracc"));
-    	switch(tipo) 
-    	{
-			case "Farinaceo","Confezionato","Uova","Frutta","Verdura":
-				Magazzino.add(p);
-				break;
-			case "Latticino":
-				p.setDataMungitura(rs.getDate("datamungitura"));
-				Magazzino.add(p);
-				break;
-    	}	
-    }
-    rs.close();
-    st.close();
-    return Magazzino;
-    } 
+	public Starter getController() {
+		return Controller;
+	}
+
+	public void setController(Starter controller) {
+		Controller = controller;
+	} 
 
 }

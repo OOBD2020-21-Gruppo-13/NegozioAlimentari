@@ -19,31 +19,37 @@ import java.awt.event.ActionEvent;
 @SuppressWarnings("serial")
 public class LoginGui extends JFrame {
 
-	private JPanel contentPane;
-	private Starter Controller;
+	private JPanel ContentPane;
 	private JTextField UsernameField;
 	private JPasswordField PasswordField;
-
+	private JButton AccediButton;
+	private JLabel UsernameLabel;
+	private JLabel PasswordLabel;
+	private JLabel CreaAccountLabel;
+	private JLabel AmministrazioneLabel;
+	private Starter Controller;
+	
 	public LoginGui(Starter temp) {
+		setTitle("Login");
 		Controller = temp;
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		ContentPane = new JPanel();
+		ContentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(ContentPane);
+		ContentPane.setLayout(null);
 	
 		UsernameField = new JTextField();
 		UsernameField.setBounds(179, 84, 86, 20);
-		contentPane.add(UsernameField);
+		ContentPane.add(UsernameField);
 		UsernameField.setColumns(10);
 		
 		PasswordField = new JPasswordField();
 		PasswordField.setBounds(179, 129, 86, 20);
-		contentPane.add(PasswordField);
+		ContentPane.add(PasswordField);
 		
-		JButton AccediButton = new JButton("Accedi");
+		AccediButton = new JButton("Accedi");
 		AccediButton.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e){
@@ -54,37 +60,37 @@ public class LoginGui extends JFrame {
 			}
 		});
 		AccediButton.setBounds(179, 160, 89, 23);
-		contentPane.add(AccediButton);
+		ContentPane.add(AccediButton);
 		
-		JLabel UsernameLabel = new JLabel("IdTessera");
+		UsernameLabel = new JLabel("IdTessera");
 		UsernameLabel.setBounds(201, 67, 86, 14);
-		contentPane.add(UsernameLabel);
+		ContentPane.add(UsernameLabel);
 		
-		JLabel PasswordLabel = new JLabel("Password");
+		PasswordLabel = new JLabel("Password");
 		PasswordLabel.setBounds(201, 115, 104, 14);
-		contentPane.add(PasswordLabel);
+		ContentPane.add(PasswordLabel);
 		
-		JLabel CreaAccountButton = new JLabel("Crea Account");
-		CreaAccountButton.setForeground(Color.BLUE);
-		CreaAccountButton.addMouseListener(new MouseAdapter() {
+		CreaAccountLabel = new JLabel("Crea Account");
+		CreaAccountLabel.setForeground(Color.BLUE);
+		CreaAccountLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				Controller.AccediRegister();
+				Controller.AccendiRegister();
 			}
 		});
-		CreaAccountButton.setFont(new Font("Arial", Font.PLAIN, 15));
-		CreaAccountButton.setBounds(179, 201, 111, 20);
-		contentPane.add(CreaAccountButton);
+		CreaAccountLabel.setFont(new Font("Arial", Font.PLAIN, 15));
+		CreaAccountLabel.setBounds(179, 201, 111, 20);
+		ContentPane.add(CreaAccountLabel);
 		
-		JLabel Amministrazione_1 = new JLabel("Amministrazione");
-		Amministrazione_1.addMouseListener(new MouseAdapter() {
+		AmministrazioneLabel = new JLabel("Amministrazione");
+		AmministrazioneLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Controller.AccendiAdmin();
 			}
 		});
-		Amministrazione_1.setForeground(Color.BLUE);
-		Amministrazione_1.setFont(new Font("Arial", Font.PLAIN, 15));
-		Amministrazione_1.setBounds(10, 11, 111, 20);
-		contentPane.add(Amministrazione_1);
+		AmministrazioneLabel.setForeground(Color.BLUE);
+		AmministrazioneLabel.setFont(new Font("Arial", Font.PLAIN, 15));
+		AmministrazioneLabel.setBounds(10, 11, 111, 20);
+		ContentPane.add(AmministrazioneLabel);
 	}
 }

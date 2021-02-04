@@ -11,30 +11,22 @@ public class Prodotto {
 	 private Date DataProdRacc;
 	 private Date DataMungitura;
 
-	public Prodotto(int quantita, int idProdotto, double prezzo) {
-		super();
-		Quantita = quantita;
-		IdProdotto = idProdotto;
-		this.Prezzo= prezzo;
-	}
-
-	public Prodotto(String nome, String tipo, Double prezzo, int quantita, int idProdotto, Date dataScadenza,Date DataProdracc) {
-		super();
-		Nome = nome;
-		Tipo = tipo;
-		Prezzo = prezzo;
-		Quantita = quantita;
-		IdProdotto = idProdotto;
+	public Prodotto(String Nome, String Tipo, Double Prezzo, int Quantita, int IdProdotto, Date DataScadenza,Date DataProdracc) {
+		
+		this.Nome = Nome;
+		this.Tipo = Tipo;
+		this.Prezzo = Prezzo;
+		this.Quantita = Quantita;
+		this.IdProdotto = IdProdotto;
 		this.DataProdRacc = DataProdracc;
-		DataScadenza = dataScadenza;
+		this.DataScadenza = DataScadenza;
 	}
 	
-	public Prodotto(int quantita, int idProdotto, double prezzo,String Nome) 
-	 {
-		super();
-		Quantita = quantita;
-		IdProdotto = idProdotto;
-		this.Prezzo= prezzo;
+	public Prodotto(int Quantita, int IdProdotto, double Prezzo,String Nome) {
+		
+		this.Quantita = Quantita;
+		this.IdProdotto = IdProdotto;
+		this.Prezzo= Prezzo;
 		this.Nome=Nome;
 	 }
 

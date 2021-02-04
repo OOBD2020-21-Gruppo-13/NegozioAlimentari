@@ -20,12 +20,18 @@ import java.awt.event.ActionEvent;
 public class RegisterGui extends JFrame {
 
 	private JPanel contentPane;
-	private Starter Controller;
+	private JButton RegisterButton;
+	private JLabel LabelNome;
+	private JLabel LabelCognome;
+	private JLabel LabelPassword;
+	private JLabel LabelRitornoLogin;
 	private JTextField NomeField;
 	private JTextField CognomeField;
 	private JPasswordField PasswordField;
+	private Starter Controller;
 
 	public RegisterGui(Starter temp){
+		setTitle("Register");
 		Controller = temp;
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,7 +46,7 @@ public class RegisterGui extends JFrame {
 		contentPane.add(NomeField);
 		NomeField.setColumns(10);
 		
-		JButton RegisterButton = new JButton("Registrati");
+		RegisterButton = new JButton("Registrati");
 		RegisterButton.addActionListener(new ActionListener(){
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
@@ -55,33 +61,27 @@ public class RegisterGui extends JFrame {
 		});
 		RegisterButton.setBounds(174, 196, 89, 23);
 		contentPane.add(RegisterButton);
-		
 		CognomeField = new JTextField();
 		CognomeField.setBounds(174, 91, 86, 20);
 		contentPane.add(CognomeField);
 		CognomeField.setColumns(10);
-		
 		PasswordField = new JPasswordField();
 		PasswordField.setBounds(174, 132, 86, 20);
 		contentPane.add(PasswordField);
-		
-		JLabel LabelNome = new JLabel("Nome");
+		LabelNome = new JLabel("Nome");
 		LabelNome.setBounds(42, 51, 86, 14);
 		contentPane.add(LabelNome);
-		
-		JLabel LabelCognome = new JLabel("Cognome");
+		LabelCognome = new JLabel("Cognome");
 		LabelCognome.setBounds(42, 94, 86, 14);
 		contentPane.add(LabelCognome);
-		
-		JLabel LabelPassword = new JLabel("Password");
+		LabelPassword = new JLabel("Password");
 		LabelPassword.setBounds(42, 135, 86, 14);
 		contentPane.add(LabelPassword);
-		
-		JLabel LabelRitornoLogin = new JLabel("Ritorno Al Login");
+		LabelRitornoLogin = new JLabel("Ritorno Al Login");
 		LabelRitornoLogin.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				RegisterGui.this.setVisible(false);
-				Controller.AccendiGui();
+				Controller.AccendiPrimaGui();
 			}
 		});
 		LabelRitornoLogin.setForeground(Color.BLUE);

@@ -12,14 +12,14 @@ public class Acquisto {
 	private Date DataAcquisto;
 	private Double PrezzoTotale, PuntiTotale;
 	
-	public Acquisto(List<Prodotto> articoli, Cliente acquirente, ClassiDB.Dipendente dipendente, int idAcquisto, Double prezzoTotale, Double puntiTotale) {
-		Articoli = articoli;
-		Acquirente = acquirente;
-		Dipendente = dipendente;
-		IdAcquisto = idAcquisto;
-		DataAcquisto = new java.sql.Date(System.currentTimeMillis());
-		PrezzoTotale = prezzoTotale;
-		PuntiTotale = puntiTotale;
+	public Acquisto(List<Prodotto> Articoli, Cliente Acquirente, Dipendente Dipendente, int IdAcquisto, Double PrezzoTotale, Double PuntiTotale) {
+		this.Articoli = Articoli;
+		this.Acquirente = Acquirente;
+		this.Dipendente = Dipendente;
+		this.IdAcquisto = IdAcquisto;
+		this.DataAcquisto = new java.sql.Date(System.currentTimeMillis());
+		this.PrezzoTotale = PrezzoTotale;
+		this.PuntiTotale = PuntiTotale;
 	}
 
 	public List<Prodotto> getArticoli() {

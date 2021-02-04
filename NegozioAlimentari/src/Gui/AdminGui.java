@@ -25,28 +25,34 @@ import java.awt.event.KeyEvent;
 @SuppressWarnings("serial")
 public class AdminGui extends JFrame {
 
-	private JPanel contentPane;
-	public JTable table;
-	private JTextField textField;
-	private JButton btnNewButton;
-	private DefaultTableModel tb;
-	Starter Controller = null;
+	private JPanel ContentPane;
+	private JLabel CercaLabel;
+	private JLabel IndietroLabel;
+	private JTable Table;
+	private JScrollPane ScrollPane;
+	private JTextField CercaField;
+	private JButton ClienteButton;
+	private JButton PuntiButton;
+	private JButton DipendenteButton;
+	private JButton PeriodoButton;
+	private DefaultTableModel Tb;
+	private Starter Controller;
 
 	public AdminGui(Starter temp) {
-		setResizable(false);
+		setTitle("Admin");
 		Controller = temp;
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 814, 490);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		ContentPane = new JPanel();
+		ContentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(ContentPane);
+		ContentPane.setLayout(null);
+		ScrollPane = new JScrollPane();
+		ScrollPane.setBounds(10, 31, 778, 409);
+		ContentPane.add(ScrollPane);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 31, 778, 409);
-		contentPane.add(scrollPane);
-		
-		tb = new DefaultTableModel() 
+		Tb = new DefaultTableModel() 
 		{
 			@Override
 	    	public Class<Integer> getColumnClass(int column) 
@@ -55,99 +61,97 @@ public class AdminGui extends JFrame {
 	    	}
 		};
 		
-		table = new JTable(tb) {
-	        public boolean isCellEditable(int row, int column) {                
-	                return false;               
+		Table = new JTable(Tb) 
+		{
+	        public boolean isCellEditable(int row, int column) 
+	        {
+	        	return false;               
 	        };
 	    };
-		table.setAutoCreateRowSorter(true);
-		table.getTableHeader().setReorderingAllowed(false);
-		table.getTableHeader().setResizingAllowed(false);
-		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(tb);
-		table.setRowSorter(sorter);
-		scrollPane.setViewportView(table);
-		textField = new JTextField();
-		textField.addKeyListener(new KeyAdapter() {
+		Table.setAutoCreateRowSorter(true);
+		Table.getTableHeader().setReorderingAllowed(false);
+		Table.getTableHeader().setResizingAllowed(false);
+		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(Tb);
+		Table.setRowSorter(sorter);
+		ScrollPane.setViewportView(Table);
+		CercaField = new JTextField();
+		CercaField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				sorter.setRowFilter(RowFilter.regexFilter("(?i)"+textField.getText()));
+				sorter.setRowFilter(RowFilter.regexFilter("(?i)"+CercaField.getText()));
 			}
 		});
-		textField.setBounds(702, 4, 86, 23);
-		contentPane.add(textField);
-		textField.setColumns(10);
-		
-		btnNewButton = new JButton("Clienti");
-		btnNewButton.addActionListener(new ActionListener() {
+		CercaField.setBounds(702, 4, 86, 23);
+		ContentPane.add(CercaField);
+		CercaField.setColumns(10);
+		ClienteButton = new JButton("Clienti");
+		ClienteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
 				try {
-					Controller.RiempiTabellaAdmin(tb, "select * from cliente_admin", "cliente_admin");
+					Controller.RiempiTabellaAdmin(Tb, "select * from cliente_admin", "cliente_admin");
 				} catch (SQLException e1) {
 					System.out.println(e1);
 				}
 			}
 		});
-		btnNewButton.setBounds(105, 4, 70, 23);
-		contentPane.add(btnNewButton);
-		
-		JButton btnNewButton_6 = new JButton("Info Dipendenti");
-		btnNewButton_6.addActionListener(new ActionListener() {
+		ClienteButton.setBounds(105, 4, 70, 23);
+		ContentPane.add(ClienteButton);
+		DipendenteButton = new JButton("Info Dipendenti");
+		DipendenteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Controller.RiempiTabellaAdmin(tb, "select * from dipendente_introito", "dipendente_introito");
+					Controller.RiempiTabellaAdmin(Tb, "select * from dipendente_introito", "dipendente_introito");
 				} catch (SQLException e1) {
 					System.out.println(e1);
 				}
 			}
 		});
-		btnNewButton_6.setBounds(349, 4, 120, 23);
-		contentPane.add(btnNewButton_6);
+		DipendenteButton.setBounds(349, 4, 120, 23);
+		ContentPane.add(DipendenteButton);
 		
-		JButton btnNewButton_7 = new JButton("Clienti Punti Categoria");
-		btnNewButton_7.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnNewButton_7.addActionListener(new ActionListener() {
+		PuntiButton = new JButton("Clienti Punti Categoria");
+		PuntiButton.setFont(new Font("Tahoma", Font.BOLD, 10));
+		PuntiButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Controller.RiempiTabellaAdmin(tb, "select * from punti", "punti");
+					Controller.RiempiTabellaAdmin(Tb, "select * from punti", "punti");
 				} catch (SQLException e1) {
 					System.out.println(e1);
 				}
 			}
 		});
-		btnNewButton_7.setBounds(185, 4, 154, 23);
-		contentPane.add(btnNewButton_7);
+		PuntiButton.setBounds(185, 4, 154, 23);
+		ContentPane.add(PuntiButton);
 		
-		JButton btnNewButton_8 = new JButton("Info Dipendenti \r\nPeriodo");
-		btnNewButton_8.addActionListener(new ActionListener() {
+		PeriodoButton = new JButton("Info Dipendenti \r\nPeriodo");
+		PeriodoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try 
-				{
+				try {
 					String query = Controller.ChiediData();
 					if(query!= null && query.isEmpty()!=true) 
-					Controller.RiempiTabellaAdmin(tb, query, "dipendente_introito");
+					Controller.RiempiTabellaAdmin(Tb, query, "dipendente_introito");
 				} catch (SQLException e1) {
 					System.out.println(e1);
 				}
 			}
 		});	
-		btnNewButton_8.setBounds(479, 4, 168, 23);
-		contentPane.add(btnNewButton_8);
-		JLabel lblNewLabel = new JLabel("Cerca");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel.setBounds(657, 5, 50, 20);
-		contentPane.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("Torna al Login\r\n");
-		lblNewLabel_1.addMouseListener(new MouseAdapter() {
+		PeriodoButton.setBounds(479, 4, 168, 23);
+		ContentPane.add(PeriodoButton);
+		CercaLabel = new JLabel("Cerca");
+		CercaLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		CercaLabel.setBounds(657, 5, 50, 20);
+		ContentPane.add(CercaLabel);
+		IndietroLabel = new JLabel("Torna al Login\r\n");
+		IndietroLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				AdminGui.this.setVisible(false);
-				Controller.AccendiGui();
+				Controller.AccendiPrimaGui();
 			}
 		});
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1.setForeground(Color.BLUE);
-		lblNewLabel_1.setBounds(10, 4, 101, 25);
-		contentPane.add(lblNewLabel_1);
+		IndietroLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		IndietroLabel.setForeground(Color.BLUE);
+		IndietroLabel.setBounds(10, 4, 101, 25);
+		ContentPane.add(IndietroLabel);
 	}
 }
