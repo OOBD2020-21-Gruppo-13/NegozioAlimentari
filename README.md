@@ -17,7 +17,27 @@ portato al fruttivendolo il maggior introito.
 
 # Collegarsi Al DBPostgres
 
+Non è neccessario crearsi un db in locale dato che il programma fa utilizzo di un server online (massimo 2 connessioni contemporanemente).
+
 Scaricare da qui il jar di postgres: https://jdbc.postgresql.org/download/postgresql-42.2.18.jar
 
 Per installarlo su eclpise andare sul Java Project poi TastoDestro->Properties->Java Build Patch->Libraries->ModuelPatch->Add External Jar-> Selezionare il jar scaricato in precendenza.
 
+# Istruzioni
+
+La prima cosa è creare un account, premere su "Crea Account" e inserire i dati, il sistema assegnerà un idtessera che dovrà essere usato per il login insieme alla password precedentemente inserita.
+Il passaggio successivo è procedere verso il negozio, nel quale bisogna selezionare una tipologia di prodotto, successivamente cliccare sul prodotto desiderato e inserire una quantità (minore o uguale di quella disponibile) in modo da essere inserito nel carrello. 
+Recandosi nel carrello, cliccando su un prodotto è possibile diminuire la sua quantità oppure procedere al pagamento, il quale preleverà i soldi dal saldo del cliente (il saldo viene generato casualmente).
+
+È possibile accedere alla sezione Amministrazione inserendo la password (admin), la quale porterà ad una schermata che permetterà la scelta di 4 opzioni, ognuna di essa mostrerà delle informazioni specifiche:
+
+Clienti) Mostra le informazioni di tutti gli acquirenti nello specifico (IdTessera,Nome,Cognome,PuntiFedelta,Acquisti,SoldiSpesi)
+
+Clienti Punti Categoria) Mostra i punti di ogni acquirente divisi in tipologia di prodotto
+(IdTessera,Nome,Cognome,TipoPunti,Quantità,Punti)
+
+Info Dipendenti) Mostra i dipendenti che hanno effettuato delle vendite
+(Nome,Cognome,Introito,Vendite)
+
+Info Dipendenti Periodo) Mostra i dipendenti che hanno effettuato delle vendite dato un intervello di tempo
+(Nome,Cognome,Introito,Vendite)
